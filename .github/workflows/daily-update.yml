@@ -1,0 +1,26 @@
+name: Update Daily Brief
+
+on:
+  schedule:
+    # Runs every day at 0:00 UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python update_brief.py
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -A
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "chore: daily brief update $(date -u +%F)"
+          git push
