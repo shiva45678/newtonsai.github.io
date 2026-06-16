@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Newton's AI Daily Brief</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0f1115;
+    color: #e6e8eb;
+  }
+  header {
+    padding: 24px;
+    text-align: center;
+    border-bottom: 1px solid #23262d;
+    background: linear-gradient(180deg, #161a24 0%, #0f1115 100%);
+  }
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+  }
+  .sub {
+    margin-top: 6px;
+    color: #9aa0a6;
+    font-size: 13px;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: #161a24;
+    border: 1px solid #23262d;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
+  }
+  .card h2 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #ffd54a;
+  }
+  .card ul {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.6;
+    color: #d8dce2;
+  }
+  .callout {
+    margin-top: 20px;
+    background: #1c2230;
+    border-left: 4px solid #60c0f8;
+    padding: 16px 18px;
+    border-radius: 8px;
+  }
+  .callout h2 {
+    margin: 0 0 8px;
+    color: #60c0f8;
+  }
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #9aa0a6;
+    font-size: 12px;
+  }
+  .pill {
+    display: inline-block;
+    background: #23262d;
+    color: #e6e8eb;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    margin-right: 6px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Newton's AI — Daily Brief</h1>
+  <div class="sub" id="datetime"></div>
+</header>
+<main class="container">
+  <div class="grid">
+    <div class="card">
+      <h2>🌅 Morning Brief</h2>
+      <ul>
+        <li><span class="pill">KPI</span> Overnight pipeline: <strong>38</strong> new opportunities</li>
+        <li><span class="pill">Alert</span> 3 deals >$10k move to next stage</li>
+        <li><span class="pill">Action</span> Outreach cadence review at 10:00</li>
+        <li><span class="pill">Focus</span> Q3 pipeline coverage back on target</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>🌆 Evening Review</h2>
+      <ul>
+        <li><span class="pill">Meetings</span> 6 demos completed</li>
+        <li><span class="pill">Won</span> Alpha — $18,500 annual contract</li>
+        <li><span class="pill">Blocked</span> Beta lab testing delayed by 2 days</li>
+        <li><span class="pill">Score</span> Team attainment: <strong>72%</strong> of monthly goal</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h2>⚡ Top Action</h2>
+    <ul>
+      <li>Follow up with <strong>Beta</strong> by EOD to unlock Q3 close</li>
+      <li>Send updated proposal to <strong>Gamma</strong> and book technical review</li>
+    </ul>
+  </div>
+</main>
+<footer>© 2026 Newton's AI · Built by shiva452648</footer>
+<script>
+  const el = document.getElementById('datetime');
+  const now = new Date();
+  el.textContent = now.toLocaleString('en-GB', { hour: '2-digit', minute:'2-digit', second:'2-digit', day:'2-digit', month:'short', year:'numeric', timeZoneName:'short' });
+</script>
+</body>
+</html>
