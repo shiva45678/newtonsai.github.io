@@ -24,4 +24,9 @@ jobs:
           git add -A
           git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "chore: daily brief update $(date -u +%F)"
-          git push
+          git push origin main
+      - run: |
+          git checkout gh-pages || git checkout -b gh-pages
+          git merge main --no-edit
+          git push origin gh-pages
+          git checkout main

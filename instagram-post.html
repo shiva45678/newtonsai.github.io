@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Newtons AI Instagram Post</title>
+<style>
+  html, body { height: 100%; margin: 0; background: #0b1520; }
+  body { display: flex; align-items: center; justify-content: center; }
+  #stage { width: 1080px; height: 1080px; position: relative; overflow: hidden; background: linear-gradient(180deg, #0b1520 0%, #11283a 100%); }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(#12243a 1px, transparent 1px), linear-gradient(90deg, #12243a 1px, transparent 1px); background-size: 60px 60px; opacity: 0.6; }
+  .ring { position: absolute; width: 280px; height: 280px; border-radius: 50%; border: 2px solid #00d6c1; opacity: 0.4; }
+  .ring.tl { top: 100px; left: 100px; }
+  .ring.br { bottom: 100px; right: 100px; }
+  .brand { position: absolute; top: 180px; left: 100px; color: white; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; font-weight: 900; font-size: 96px; letter-spacing: 1px; }
+  .sub { position: absolute; top: 300px; left: 110px; color: #00d6c1; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; font-weight: 700; font-size: 44px; }
+  .features { position: absolute; top: 420px; left: 100px; display: flex; flex-wrap: wrap; gap: 16px; width: 880px; }
+  .pill { padding: 14px 18px; border-radius: 999px; background: #122a3a; color: #cdddf3; border: 1px solid #224357; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; font-size: 30px; }
+  .cta { position: absolute; bottom: 180px; left: 100px; right: 100px; color: white; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; font-weight: 900; font-size: 44px; }
+  .price { position: absolute; bottom: 120px; left: 100px; color: #8aa6bf; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; font-size: 32px; }
+  .foot { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: #00d6c1; display: flex; align-items: center; padding: 0 100px; color: #0b1520; font-weight: 800; font-size: 28px; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <div class="grid"></div>
+    <div class="ring tl"></div>
+    <div class="ring br"></div>
+    <div class="brand">Newtons AI</div>
+    <div class="sub">Clinical AI for Doctors</div>
+    <div class="features">
+      <div class="pill">OPD Assistance</div>
+      <div class="pill">Treatment Planning</div>
+      <div class="pill">ICU Risk Prediction</div>
+      <div class="pill">Voice Intake</div>
+      <div class="pill">Lab Sync</div>
+      <div class="pill">HIPAA Ready</div>
+    </div>
+    <div class="cta">Join 500+ Doctors Trusting Newtons AI</div>
+    <div class="price">₹500/month  ·  ₹3,000/year</div>
+    <div class="foot">www.dr.newtons.in</div>
+  </div>
+</body>
+</html>
