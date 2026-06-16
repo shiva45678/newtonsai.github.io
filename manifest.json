@@ -4,6 +4,8 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
+  "dir": "auto",
   "background_color": "#0b1520",
   "theme_color": "#00d6c1",
   "description": "Newtons AI morning brief and evening review",

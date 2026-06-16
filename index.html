@@ -56,6 +56,7 @@
       <button class="badge" id="refreshBtn" onclick="window.location.reload(true)">Refresh now</button>
       <a class="badge" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a>
       <a class="badge" href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a>
+      <button class="badge" id="purgeCacheBtn">Purge cache</button>
     </div>
   </header>
 
@@ -105,6 +106,28 @@
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js').catch(() => {});
         });
+      }
+    } catch (e) {}
+
+    try {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data === 'purged') {
+            window.location.reload(true);
+          }
+        });
+      }
+    } catch (e) {}
+
+    try {
+      const purgeBtn = document.getElementById('purgeCacheBtn');
+      if (purgeBtn && 'serviceWorker' in navigator) {
+        purgeBtn.addEventListener('click', async () => {
+          const reg = await navigator.serviceWorker.ready;
+          reg.active?.postMessage('purge');
+        });
+      } else if (purgeBtn) {
+        purgeBtn.addEventListener('click', () => window.location.reload(true));
       }
     } catch (e) {}
 
