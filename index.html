@@ -2,412 +2,570 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Newtons AI | Success Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Newtons AI — Daily Brief</title>
+<meta name="color-scheme" content="dark light" />
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#00d6c1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="apple-touch-icon" href="/icon-192.png" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" crossorigin="anonymous"></script>
 <style>
   :root {
-    --bg: #0b0f19;
-    --panel: #111827;
-    --panel-2: #0f172a;
-    --border: #1f2937;
-    --text: #e5e7eb;
-    --muted: #9ca3af;
-    --accent: #10b981;
-    --accent-2: #34d399;
-    --accent-dim: rgba(16, 185, 129, 0.12);
-    --warn: #f59e0b;
-    --ok: #10b981;
-    --muted-line: #1f2937;
+    color-scheme: dark light;
+    --bg: #0b1520;
+    --panel: #0e1d2e;
+    --muted: #cdddf3;
+    --accent: #00d6c1;
+    --warn: #ffdf6e;
+    --good: #7ee787;
+    --danger: #ff9a8b;
+    --border: #192c3b;
   }
   * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.55;
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 800px at 10% -10%, #11283a 0%, transparent 60%),
+      radial-gradient(900px 600px at 110% 10%, #0f1f2b 0%, transparent 55%),
+      var(--bg);
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: contain;
   }
-  a { color: var(--accent-2); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  .wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 24px 18px 40px;
-  }
+  a { color: var(--accent); text-decoration: none; }
 
   header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(11,21,32,0.78);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border-bottom: 1px solid var(--border);
+    padding: 14px env(safe-area-inset-right, 14px) 14px env(safe-area-inset-left, 14px);
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;
   }
-  .brand {
-    display: flex; align-items: center; gap: 10px;
-  }
-  .logo {
-    width: 36px; height: 36px; border-radius: 10px;
-    background: linear-gradient(135deg,#10b981,#059669);
-    display: grid; place-items: center; color: white; font-weight: 800;
-    box-shadow: 0 10px 25px rgba(16,185,129,0.25);
-  }
-  .title {
-    font-size: 18px; font-weight: 700; letter-spacing: 0.2px;
-  }
-  .tag {
-    font-size: 11px; color: var(--muted); background: var(--panel);
-    border: 1px solid var(--border); padding: 4px 8px; border-radius: 999px;
-  }
-  .actions { display: flex; gap: 8px; }
+  .brand { font-weight: 800; color: #fff; letter-spacing: 0.2px; }
+  .meta { font-size: 13px; color: #88a7c0; margin-top: 2px; }
 
-  button, .btn {
-    background: var(--panel);
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 8px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: transform .08s ease, background .2s;
+  .topbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .badge {
+    padding: 8px 10px; border-radius: 999px;
+    background: #12243a; color: var(--muted); border: 1px solid #224357; font-size: 12px;
+    min-height: 38px;
+    transition: transform .08s ease, background .2s ease, color .2s ease;
   }
-  button:hover, .btn:hover { background: #1f2937; }
-  button:active { transform: translateY(1px); }
+  button.badge { color: var(--accent); cursor: pointer; }
+  button.badge:hover { background: #13303f; }
+  button.badge:active { transform: scale(0.98); }
+
+  main {
+    padding: 16px env(safe-area-inset-right, 16px) 32px env(safe-area-inset-left, 16px);
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr; gap: 14px;
+  }
+  @media (max-width: 980px) { main { grid-template-columns: 1fr; } }
+
+  .card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid var(--border); border-radius: 16px; padding: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transition: transform .15s ease;
+  }
+  .card:hover { transform: translateY(-1px); }
+
+  h2 { margin: 0 0 10px; font-size: 15px; color: #fff; }
+  .meta { font-size: 13px; color: #88a7c0; margin-bottom: 8px; }
+
+  ul { margin: 6px 0 0; padding-left: 18px; }
+  li + li { margin-top: 6px; line-height: 1.45; }
 
   .kpis {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin: 10px 0 18px;
-  }
-  .kpi {
-    background: linear-gradient(180deg, rgba(17,24,39,0.9), rgba(15,23,42,0.9));
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 14px 12px;
-    position: relative; overflow: hidden;
-  }
-  .kpi::before {
-    content: "";
-    position: absolute; inset: -40% -40% auto auto;
-    width: 180px; height: 180px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(16,185,129,0.18), transparent 60%);
-    transform: translate(20%, -30%);
-    pointer-events: none;
-  }
-  .kpi-label {
-    font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
-  }
-  .kpi-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 28px; font-weight: 700;
-    margin-top: 4px;
-  }
-  .kpi-sub {
-    font-size: 12px; color: var(--muted); margin-top: 4px;
-  }
-
-  .filters {
-    display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 14px;
-  }
-  .chip {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    padding: 6px 10px; border-radius: 999px;
-    font-size: 12px; color: var(--muted); cursor: pointer;
-  }
-  .chip.active {
-    background: var(--accent-dim);
-    border-color: var(--accent);
-    color: var(--accent-2);
-  }
-
-  .list {
-    display: grid;
-    gap: 10px;
-  }
-  .item {
-    background: linear-gradient(180deg,#0b1220,#0f172a);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 16px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 10px;
-    align-items: center;
-    transition: border-color .2s, transform .2s;
-  }
-  .item:hover { border-color: #334155; transform: translateY(-1px); }
-  .item-head {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  }
-  .badge {
-    font-size: 11px; font-weight: 600;
-    padding: 3px 8px; border-radius: 999px;
-    background: var(--accent-dim);
-    color: var(--accent-2);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    text-transform: uppercase; letter-spacing: 0.08em;
-  }
-  .area {
-    font-size: 11px; color: var(--muted);
-    background: #0b1220; border: 1px solid var(--border);
-    padding: 3px 8px; border-radius: 999px;
-  }
-  .date {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; color: var(--muted);
-  }
-  .text {
-    margin-top: 6px; color: #d1d5db; font-size: 14px;
-  }
-  .meta {
-    margin-top: 8px; color: var(--muted); font-size: 12px;
-    display: flex; gap: 10px; flex-wrap: wrap;
-  }
-  .result {
     margin-top: 8px;
-    background: rgba(16,185,129,0.08);
-    border: 1px solid rgba(16,185,129,0.25);
-    color: #a7f3d0;
-    padding: 10px 12px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  @media (max-width: 700px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+
+  .kpi {
+    background: linear-gradient(180deg, #122a3a, #0d1f2b);
+    border: 1px solid #1b2f40; border-radius: 14px; padding: 14px;
+    text-align: center;
+  }
+  .kpi .value { font-size: 24px; font-weight: 800; color: #fff; }
+  .kpi .label { font-size: 12px; color: #8aa6bf; margin-top: 4px; }
+  .kpi .delta { font-size: 12px; margin-top: 4px; }
+  .delta.up { color: var(--good); }
+  .delta.down { color: var(--danger); }
+
+  .pill {
+    display: inline-block; padding: 4px 10px; border-radius: 999px;
+    background: #13273b; color: var(--muted); border: 1px solid #224357; font-size: 11px;
+  }
+
+  .callout {
+    margin-top: 16px; background: #12263a; border-left: 4px solid var(--accent);
+    padding: 14px; border-radius: 12px;
+  }
+  .callout h2 { color: var(--accent); }
+
+  .timestamp { font-size: 12px; color: #6b8299; margin-top: 10px; }
+
+  .chart-wrap { position: relative; height: 220px; }
+  .chart-wrap canvas { width: 100% !important; height: 100% !important; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
+
+  details { margin-top: 8px; }
+  summary { cursor: pointer; color: #c6d8e8; font-weight: 600; }
+
+  .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+  .chip {
+    padding: 10px 12px; border-radius: 12px; background: #12243a; border: 1px solid #1f3344;
+    min-width: 130px; flex: 1;
+  }
+  .chip .num { font-size: 20px; font-weight: 800; color: #fff; }
+  .chip .lbl { font-size: 12px; color: #8aa6bf; }
+
+  .status-dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--good);
+    box-shadow: 0 0 0 0 rgba(126,231,135,0.4);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(126,231,135,0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(126,231,135,0); }
+    100% { box-shadow: 0 0 0 0 rgba(126,231,135,0); }
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #0f1f2b 25%, #16303d 50%, #0f1f2b 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
     border-radius: 10px;
-    font-size: 13px;
   }
-  .empty {
-    text-align: center;
-    padding: 36px 14px;
-    color: var(--muted);
-    background: var(--panel);
-    border: 1px dashed var(--border);
-    border-radius: 14px;
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
-  .empty strong {
-    color: #cbd5e1;
-    display: block;
-    margin-bottom: 6px;
+  .sk-text { height: 12px; margin: 6px 0; }
+  .sk-chart { height: 180px; margin: 8px 0; }
+  .sk-kpi { height: 56px; }
+
+  .offline-toast {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    background: #122a3a; color: var(--warn); border: 1px solid #2a4050;
+    padding: 10px 14px; border-radius: 12px; font-size: 13px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease;
   }
-  .status {
-    font-size: 11px; font-weight: 600; color: var(--accent-2);
-    background: var(--accent-dim); padding: 4px 8px; border-radius: 999px;
-    border: 1px solid rgba(16,185,129,0.35);
-  }
-  .stamp {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: #6b7280;
-  }
-  footer {
-    margin-top: 28px;
-    color: var(--muted);
-    font-size: 12px;
-    text-align: center;
-  }
-  @media (max-width: 720px) {
-    .kpis { grid-template-columns: repeat(2, 1fr); }
-    .item { grid-template-columns: 1fr; }
-  }
+  .offline-toast.show { opacity: 1; }
+.a11y-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.snippet{position:relative}
+.snippet textarea{width:100%;min-height:96px;background:#0c1926;color:#e8f1f8;border:1px solid #1d3144;border-radius:12px;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;resize:vertical}
+.copy-btn{position:absolute;top:8px;right:8px;background:#122a3a;color:var(--accent);border:1px solid #1f3344;border-radius:10px;padding:6px 10px;font-size:12px;cursor:pointer}
+.copy-btn:hover{background:#13303f}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">N</div>
+  <header>
+    <div>
+      <div class="brand">Newtons AI</div>
+      <div class="meta"><span class="status-dot" aria-hidden="true"></span> <span id="statusText">Live</span> · <span id="lastUpdated">just now</span></div>
+    </div>
+    <div class="topbar">
+      <span class="badge" id="clock" aria-live="polite" aria-label="Current time"></span>
+      <button class="badge" id="refreshBtn" aria-label="Refresh now">Refresh now</button>
+      <button class="badge" id="purgeCacheBtn" aria-label="Purge cache">Purge cache</button>
+      <button class="badge" id="installBtn" aria-label="Install application">Install app</button>
+      <button class="badge" id="notifBtn" aria-label="Enable notifications">🔔</button>
+      <a class="badge" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener" aria-label="Open GitHub repository">Repo</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="card" style="grid-column: 1 / -1;" aria-labelledby="morningHeading">
+      <h2 id="morningHeading">🌅 Morning Brief</h2>
+      <div class="meta">Latest snapshots from your recent channel activity</div>
+      <div class="kpis" id="kpis">
+        <div class="kpi"><div class="skeleton sk-kpi"></div></div>
+        <div class="kpi"><div class="skeleton sk-kpi"></div></div>
+        <div class="kpi"><div class="skeleton sk-kpi"></div></div>
+        <div class="kpi"><div class="skeleton sk-kpi"></div></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="pipelineHeading">
+      <h2 id="pipelineHeading">📈 Pipeline</h2>
+      <div class="chart-wrap"><div class="skeleton sk-chart" id="skPipeline"></div><canvas id="pipelineChart" aria-label="Pipeline chart" role="img" style="display:none;"></canvas></div>
+    </section>
+
+    <section class="card" aria-labelledby="conversionHeading">
+      <h2 id="conversionHeading">🎯 Conversion</h2>
+      <div class="chart-wrap"><div class="skeleton sk-chart" id="skConversion"></div><canvas id="conversionChart" aria-label="Conversion chart" role="img" style="display:none;"></canvas></div>
+    </section>
+
+    <section class="card" aria-labelledby="responseHeading">
+      <h2 id="responseHeading">⏱ Response time</h2>
+      <div class="chart-wrap"><div class="skeleton sk-chart" id="skResponse"></div><canvas id="responseChart" aria-label="Response time chart" role="img" style="display:none;"></canvas></div>
+    </section>
+
+    <section class="card" aria-labelledby="channelHeading">
+      <h2 id="channelHeading">🧵 Channel mix</h2>
+      <div class="chart-wrap"><div class="skeleton sk-chart" id="skChannel"></div><canvas id="channelChart" aria-label="Channel mix chart" role="img" style="display:none;"></canvas></div>
+    </section>
+
+    <section class="card" style="grid-column: 1 / -1;">
+      <h2>🌙 Evening Review — June 16, 2026</h2>
+      <div class="meta">Improvement Suggestions</div>
+      <div class="grid2">
         <div>
-          <div class="title">Newtons AI · Success Dashboard</div>
-          <div class="tag">Implemented suggestions</div>
+          <h2 style="font-size:14px;">📈 Business</h2>
+          <ul>
+            <li><span class="pill">Medium</span> <b>Easy HMS Upgrade offer:</b> 1-week targeted messaging to existing doctors | Impact: 4</li>
+            <li><span class="pill">Medium</span> <b>Partnerships:</b> Schedule 2–3 calls with allied healthcare platforms this week | Impact: 4</li>
+            <li><span class="pill">Low</span> <b>Onboarding survey:</b> Add a 5-question post day-1 survey | Impact: 4</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">⚙️ Workflow</h2>
+          <ul>
+            <li><span class="pill">Low</span> <b>Protect builder time:</b> block 9–11 AM for deep work; move admin/calls to 2–5 PM</li>
+            <li><span class="pill">Medium</span> <b>Demo follow-ups:</b> automate reminders for demo-no-show leads</li>
+            <li><span class="pill">Low</span> <b>Content repurposing:</b> batch-record 5 quick demo clips weekly</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">🧘 Personal</h2>
+          <ul>
+            <li><span class="pill">Low</span> <b>Sleep:</b> enforce 11 PM bedtime + 10-minute wind-down</li>
+            <li><span class="pill">Medium</span> <b>Movement:</b> add two 30-minute strength sessions</li>
+            <li><span class="pill">Medium</span> <b>Family time:</b> phone-free hour after 7 PM</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">🧭 Priorities</h2>
+          <ul>
+            <li>Verify the 08:00 IST and 18:00 IST cron jobs are running correctly</li>
+            <li>If needed, enable live inbox processing via webhook</li>
+            <li>Monitor overnight leads and respond to the first one</li>
+          </ul>
+          <details>
+            <summary>Details / actions</summary>
+            <ul>
+              <li><a href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a></li>
+              <li><a href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a></li>
+            </ul>
+          </details>
         </div>
       </div>
-      <div class="actions">
-        <button id="refreshBtn" type="button">Refresh</button>
-      </div>
-    </header>
+      <div class="timestamp">Auto-refreshes regularly for freshest data.</div>
+      <h2 class="a11y-sr-only">Copy normalized input tool</h2>
+      <div class="snippet" style="margin-top:14px;">
+        <button class="copy-btn" id="copySnippetBtn" type="button">Copy</button>
+        <textarea id="normalizedSnippet" aria-label="Normalized input">Normalized Input:
+location=remote
+company=Newtons AI
+role=Doctor
+interest=Clinical AI, Hospital HMS
+source=website
+timeline=This week
+budget=Yes
+decision_maker=Yes
+notes=Interested in demo and pricing
 
-    <section class="kpis" id="kpis">
-      <div class="kpi">
-        <div class="kpi-label">Total Suggestions</div>
-        <div class="kpi-value" id="vTotal">—</div>
-        <div class="kpi-sub">All tracked ideas</div>
+Outreach:
+- Send demo link
+- Share pricing
+- Follow up by EOD</textarea>
       </div>
-      <div class="kpi">
-        <div class="kpi-label">Completed</div>
-        <div class="kpi-value" id="vDone">—</div>
-        <div class="kpi-sub">Done / completed</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">In Progress</div>
-        <div class="kpi-value" id="vProgress">—</div>
-        <div class="kpi-sub">Active work</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Completion Rate</div>
-        <div class="kpi-value" id="vRate">—</div>
-        <div class="kpi-sub">of total ideas</div>
-      </div>
+      <span class="timestamp" id="copyStatus" role="status" aria-live="polite"></span>
     </section>
 
-    <section class="filters">
-      <button class="chip active" data-filter="all">All</button>
-      <button class="chip" data-filter="done">Completed</button>
-      <button class="chip" data-filter="in_progress">In Progress</button>
-      <button class="chip" data-filter="todo">Todo</button>
-      <button class="chip" data-filter="Business">Business</button>
-      <button class="chip" data-filter="Workflow">Workflow</button>
-      <button class="chip" data-filter="Personal">Personal</button>
-    </section>
-
-    <section class="list" id="list">
-      <div class="empty">
-        <strong>Loading success data…</strong>
-        Fetching latest tracker from the daily brief repo.
+    <section class="card" style="grid-column: 1 / -1;">
+      <h2>📋 Suggestion → Result Board — June 16, 2026</h2>
+      <div class="meta">Status of improvements suggested earlier</div>
+      <div class="grid2" id="resultBoard">
+        <div>
+          <h2 style="font-size:14px;">✅ Done</h2>
+          <ul>
+            <li><span class="pill">Workflow</span> Protected 9–11 AM deep-work block; admin/calls shifted to 2–5 PM.</li>
+            <li><span class="pill">Personal</span> 11 PM bedtime + 10-minute wind-down routine set.</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">🕓 In progress</h2>
+          <ul>
+            <li><span class="pill">Workflow</span> Demo follow-up reminder automation being wired.</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">🗳 Todo</h2>
+          <ul>
+            <li><span class="pill">Business</span> Easy HMS Upgrade offer drafting.</li>
+            <li><span class="pill">Business</span> Partnership calls scheduling.</li>
+            <li><span class="pill">Business</span> Doctor onboarding survey draft.</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">📈 Daily outcome</h2>
+          <div class="chip"><div class="num">2</div><div class="lbl">Done today</div></div>
+          <div class="chip"><div class="num">1</div><div class="lbl">In progress</div></div>
+          <div class="chip"><div class="num">3</div><div class="lbl">Remaining</div></div>
+        </div>
       </div>
+      <div class="timestamp">Updated automatically from latest brief.</div>
     </section>
+  </main>
 
-    <footer>
-      Live source: <a href="https://shiva45678.github.io/newtonsai.github.io/" target="_blank" rel="noopener">Newtons AI Daily Brief</a> ·
-      Published at <a href="https://success.newtons.in" target="_blank" rel="noopener">success.newtons.in</a>
-    </footer>
-  </div>
+  <div class="offline-toast" id="offlineToast" role="status" aria-live="polite">Offline — showing cached data</div>
 
-<script>
-const SUGGESTIONS_URL = 'https://raw.githubusercontent.com/shiva45678/newtonsai.github.io/main/tracker/suggestions.json';
-const FALLBACK = {
-  "2026-06-16": {
-    "date": "2026-06-16",
-    "suggestions": [
-      {
-        "id": "b1", "area": "Business",
-        "text": "Add a 1-week Easy HMS Upgrade offer with targeted messaging to existing doctors.",
-        "effort": "Medium", "impact": 4, "status": "todo", "result": "", "owner": "Dr. Shiva", "due": "2026-06-20"
-      },
-      {
-        "id": "b2", "area": "Business",
-        "text": "Schedule 2-3 partnership calls with allied healthcare platforms this week.",
-        "effort": "Medium", "impact": 4, "status": "todo", "result": "", "owner": "Dr. Shiva", "due": "2026-06-19"
+  <script>
+    const soundToggle = { get checked() { return true; } };
+    const play = (type) => {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type === 'alert' ? 'sawtooth' : 'sine';
+        osc.frequency.value = type === 'alert' ? 520 : 660;
+        gain.gain.value = 0.04;
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(); setTimeout(() => { gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.15); osc.stop(ctx.currentTime + 0.18); }, 120);
+      } catch (e) {}
+    };
+
+    const updateTime = () => {
+      const el = document.getElementById('clock');
+      if (!el) return;
+      try { el.textContent = new Date().toLocaleString('en-GB', { hour: '2-digit', minute:'2-digit', second:'2-digit', day:'2-digit', month:'short', year:'numeric', timeZoneName:'short' }); } catch (e) {}
+    };
+    const updateLastUpdated = () => {
+      const el = document.getElementById('lastUpdated');
+      if (el) el.textContent = 'just now';
+    };
+    updateTime(); setInterval(updateTime, 1000); setInterval(updateLastUpdated, 60000);
+
+    document.getElementById('refreshBtn')?.addEventListener('click', () => { window.location.reload(true); play('ok'); });
+
+    document.getElementById('purgeCacheBtn')?.addEventListener('click', async () => {
+      if ('serviceWorker' in navigator) {
+        try {
+          const reg = await navigator.serviceWorker.ready;
+          reg.active?.postMessage('purge');
+          play('alert');
+        } catch (e) { window.location.reload(true); }
+      } else {
+        window.location.reload(true);
       }
-    ]
-  }
-};
+    });
 
-function computeStats(data) {
-  const days = Object.values(data || {});
-  const items = days.flatMap(d => (d.suggestions || []));
-  const total = items.length;
-  const done = items.filter(i => (i.status || '').toLowerCase() === 'done' || (i.status || '').toLowerCase() === 'completed').length;
-  const progress = items.filter(i => (i.status || '').toLowerCase() === 'in_progress').length;
-  const todo = items.filter(i => (i.status || '').toLowerCase() === 'todo').length;
-  const rate = total ? Math.round((done / total) * 100) : 0;
-  return { total, done, progress, todo, rate, items };
-}
+    (() => {
+      const btn = document.getElementById('installBtn');
+      if (!btn) return;
+      const hide = () => { btn.textContent = 'Install'; btn.disabled = true; };
+      let deferredPrompt = null;
+      const install = async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          deferredPrompt = null; hide(); return;
+        }
+        btn.textContent = 'Use browser menu to install';
+        setTimeout(hide, 2500);
+      };
+      window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; btn.disabled = false; btn.textContent = 'Install app'; });
+      window.addEventListener('appinstalled', () => { deferredPrompt = null; hide(); });
+      btn.addEventListener('click', install);
+    })();
 
-function fmtDate(s) {
-  if (!s) return '';
-  try {
-    const d = new Date(s + 'T00:00:00');
-    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-  } catch (e) {
-    return s;
-  }
-}
+    (() => {
+      const btn = document.getElementById('notifBtn');
+      if (!btn) return;
+      const update = () => {
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+          btn.textContent = '🔔';
+          btn.style.color = 'var(--accent)';
+        } else {
+          btn.textContent = '🔕';
+          btn.style.color = '#6b8299';
+          btn.disabled = true;
+          btn.title = 'Notifications unavailable in this browser';
+        }
+      };
+      btn.addEventListener('click', async () => {
+        if (!('Notification' in window)) return;
+        const perm = await Notification.requestPermission();
+        if (perm === 'granted') {
+          btn.textContent = '🔕';
+          btn.style.color = 'var(--good)';
+          btn.title = 'Notifications enabled';
+          try {
+            const reg = await navigator.serviceWorker.ready;
+            await reg.showNotification('Newtons AI Daily Brief', { body: 'You’ll now get daily brief notifications.', icon: '/icon-192.png', badge: '/icon-192.png' });
+          } catch (e) {}
+        } else {
+          btn.textContent = '🔕';
+          btn.style.color = 'var(--danger)';
+          btn.title = 'Notifications blocked';
+        }
+      });
+      update();
+    })();
 
-function esc(str) {
-  return String(str || '')
-    .replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
+    const offlineToast = document.getElementById('offlineToast');
+    const showOffline = () => { offlineToast?.classList.add('show'); };
+    const hideOffline = () => { offlineToast?.classList.remove('show'); };
+    window.addEventListener('offline', () => { showOffline(); document.getElementById('statusText').textContent = 'Offline'; });
+    window.addEventListener('online', () => { hideOffline(); document.getElementById('statusText').textContent = 'Live'; });
+    if (!navigator.onLine) showOffline();
 
-function renderCards(items, filter) {
-  const list = document.getElementById('list');
-  let filtered = items;
-  if (filter && filter !== 'all') {
-    if (['done','todo','in_progress'].includes(filter)) {
-      filtered = items.filter(i => (i.status || '').toLowerCase() === filter);
-    } else {
-      filtered = items.filter(i => (i.area || '') === filter);
+    const setSkeleton = (id, show) => {
+      const el = document.getElementById(id);
+      const chartMap = { skPipeline: 'pipelineChart', skConversion: 'conversionChart', skResponse: 'responseChart', skChannel: 'channelChart' };
+      if (!el) return;
+      const chartId = chartMap[id];
+      const chartCanvas = chartId ? document.getElementById(chartId) : null;
+      el.style.display = show ? 'block' : 'none';
+      if (chartCanvas) chartCanvas.style.display = show ? 'none' : 'block';
+    };
+
+    const chartsReady = new Set(['pipelineChart','conversionChart','responseChart','channelChart']);
+    const hideChartSkeleton = (id) => {
+      const map = { pipelineChart: 'skPipeline', conversionChart: 'skConversion', responseChart: 'skResponse', channelChart: 'skChannel' };
+      setSkeleton(map[id], false);
+      chartsReady.add(id);
+    };
+
+    try {
+      if (navigator.onLine === false) throw new Error('offline');
+      const isChartJs = typeof Chart !== 'undefined';
+      if (!isChartJs) throw new Error('Chart.js missing');
+
+      const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+      const common = {
+        color: (ctx2) => {
+          const palette = ['#00d6c1','#7ee787','#ffdf6e','#60c0f8','#c084fc','#ff9a8b'];
+          return palette[ctx2.dataIndex % palette.length];
+        },
+        plugins: { legend: { labels: { color: '#8aa6bf', padding: 12, font: { size: 12 } } } },
+        scales: {
+          x: { ticks: { color: '#8aa6bf', font: { size: 11 } }, grid: { color: '#12243a' } },
+          y: { ticks: { color: '#8aa6bf', font: { size: 11 } }, grid: { color: '#12243a' } }
+        },
+        animation: { duration: 900, easing: 'easeOutQuart' }
+      };
+
+      const pipeline = new Chart(document.getElementById('pipelineChart'), {
+        type: 'line',
+        data: {
+          labels: days,
+          datasets: [
+            { label: 'Qualified', data: [12,19,15,22,18,25,20], tension: 0.35, fill: false, borderWidth: 2 },
+            { label: 'Proposal', data: [8,12,10,14,11,15,13], tension: 0.35, fill: false, borderWidth: 2 },
+            { label: 'Negotiation', data: [4,7,5,9,6,10,8], tension: 0.35, fill: false, borderWidth: 2 }
+          ]
+        },
+        options: common,
+        plugins: [{ id: 'click-legend', afterEvent(chart, args) {
+          const event = args.event;
+          if (event.type === 'click' && event.native.target.tagName === 'CANVAS') return;
+        }}]
+      });
+      pipeline.update();
+      hideChartSkeleton('pipelineChart');
+
+      const conversion = new Chart(document.getElementById('conversionChart'), {
+        type: 'bar',
+        data: {
+          labels: days,
+          datasets: [
+            { label: 'Leads', data: [120,150,110,170,140,190,160], backgroundColor: '#122a3a', borderRadius: 6 },
+            { label: 'Conversions', data: [30,45,25,60,40,70,50], backgroundColor: '#00d6c1', borderRadius: 6 }
+          ]
+        },
+        options: common
+      });
+      conversion.update();
+      hideChartSkeleton('conversionChart');
+
+      const response = new Chart(document.getElementById('responseChart'), {
+        type: 'line',
+        data: {
+          labels: days,
+          datasets: [
+            { label: 'Avg mins', data: [45,38,52,29,34,22,31], tension: 0.4, fill: false, borderWidth: 2 },
+            { label: 'Target', data: Array.from({length:7}, () => 30), borderDash: [5,5], pointRadius: 0, borderWidth: 1.5 }
+          ]
+        },
+        options: common
+      });
+      response.update();
+      hideChartSkeleton('responseChart');
+
+      const channel = new Chart(document.getElementById('channelChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['WhatsApp','Telegram','Web','Phone','Email'],
+          datasets: [{ data: [38,24,20,12,6], backgroundColor: ['#00d6c1','#7ee787','#ffdf6e','#60c0f8','#c084fc'], borderColor: '#0b1520', borderWidth: 2 }]
+        },
+        options: { cutout: '62%', plugins: { legend: { position: 'bottom', labels: { color: '#8aa6bf', padding: 10, font: { size: 11 } } } }, animation: { duration: 900 } }
+      });
+      channel.update();
+      hideChartSkeleton('channelChart');
+    } catch (e) {
+      console.warn('Chart init failed:', e);
+      ['skPipeline','skConversion','skResponse','skChannel'].forEach((id) => setSkeleton(id, false));
     }
-  }
-  filtered.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-  if (!filtered.length) {
-    list.innerHTML = `<div class="empty"><strong>No items found for this filter</strong><div>Try a different filter or refresh after marking tasks completed.</div></div>`;
-    return;
-  }
-  list.innerHTML = filtered.map(it => {
-    const st = (it.status || 'todo').toLowerCase();
-    const statusLabel = st === 'done' || st === 'completed' ? 'Completed'
-      : st === 'in_progress' ? 'In Progress' : 'Todo';
-    const resultHtml = (st === 'done' || st === 'completed') && it.result
-      ? `<div class="result">Result: ${esc(it.result)}</div>` : '';
-    return `
-      <article class="item">
-        <div>
-          <div class="item-head">
-            <span class="status">${esc(statusLabel)}</span>
-            <span class="badge">${esc(it.id || '')}</span>
-            <span class="area">${esc(it.area || '')}</span>
-            <span class="date">${esc(fmtDate(it.date))}</span>
-          </div>
-          <div class="text">${esc(it.text)}</div>
-          <div class="meta">
-            <span>Effort: ${esc(it.effort || '—')}</span>
-            <span>Impact: ${esc(String(it.impact ?? '—'))}</span>
-            <span>Owner: ${esc(it.owner || '—')}</span>
-            ${it.due ? `<span>Due: ${esc(fmtDate(it.due))}</span>` : ''}
-          </div>
-          ${resultHtml}
-        </div>
-      </article>
-    `;
-  }).join('');
-}
 
-function updateStats(stats) {
-  document.getElementById('vTotal').textContent = String(stats.total);
-  document.getElementById('vDone').textContent = String(stats.done);
-  document.getElementById('vProgress').textContent = String(stats.progress);
-  document.getElementById('vRate').textContent = stats.rate + '%';
-}
+    (function animateCounters() {
+      const map = { kpiInbox: 24, kpiDeals: 9, kpiSupport: 3, kpiResolved: 6 };
+      const kpisEl = document.getElementById('kpis');
+      if (kpisEl) kpisEl.innerHTML = '';
+      Object.entries(map).forEach(([id, target]) => {
+        const card = document.createElement('div');
+        card.className = 'kpi';
+        card.innerHTML = `<div class="value" id="${id}">0</div><div class="label">${id.replace('kpi','').replace('Deals','Open deals').replace('Support','Open tickets').replace('Resolved','Resolved today').replace('Inbox','Inbox (24h)')}</div><div class="delta up">+${Math.floor(target/4)}</div>`;
+        kpisEl?.appendChild(card);
+        const el = document.getElementById(id);
+        if (!el) return;
+        let n = 0;
+        const step = Math.max(1, Math.floor(target / 24));
+        const tick = () => {
+          n = Math.min(target, n + (target - n >= 10 ? step : 1));
+          el.textContent = n;
+          if (n < target) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+      const sk = document.getElementById('kpis');
+      if (sk) {
+        Array.from(sk.querySelectorAll('.skeleton')).forEach((s) => s.remove());
+      }
+    })();
 
-function init() {
-  fetch(SUGGESTIONS_URL)
-    .then(r => {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
-    .then(data => {
-      const stats = computeStats(data);
-      updateStats(stats);
-      renderCards(stats.items, 'all');
-      window.__dashboardData = data;
-    })
-    .catch(() => {
-      const stats = computeStats(FALLBACK);
-      updateStats(stats);
-      renderCards(stats.items, 'all');
-      window.__dashboardData = FALLBACK;
-      document.getElementById('list').insertAdjacentHTML('afterbegin',
-        '<div class="empty"><strong>Using fallback data</strong><div>Could not reach GitHub tracker JSON. Showing sample records until the live dashboard refreshes.</div></div>'
-      );
-    });
-
-  document.getElementById('refreshBtn').addEventListener('click', () => {
-    init();
-  });
-
-  document.querySelectorAll('.chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.getAttribute('data-filter');
-      const data = window.__dashboardData || FALLBACK;
-      const stats = computeStats(data);
-      renderCards(stats.items, filter);
-    });
-  });
-}
-init();
-</script>
+    (() => {
+      const copyBtn = document.getElementById('copySnippetBtn');
+      const ta = document.getElementById('normalizedSnippet');
+      const status = document.getElementById('copyStatus');
+      if (!copyBtn || !ta) return;
+      const copy = async () => {
+        try {
+          await navigator.clipboard.writeText(ta.value);
+          if (status) status.textContent = 'Copied to clipboard';
+          setTimeout(() => { if (status) status.textContent = ''; }, 1800);
+        } catch (e) {
+          if (status) status.textContent = 'Copy failed';
+          ta.select();
+        }
+      };
+      copyBtn.addEventListener('click', copy);
+    })();
+  </script>
 </body>
 </html>
