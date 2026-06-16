@@ -3,128 +3,84 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Newton's AI Daily Brief</title>
+<title>Newtons AI — Daily Brief</title>
+<meta name="color-scheme" content="dark light" />
 <style>
+  :root {
+    color-scheme: dark light;
+    --bg: #0b1520;
+    --panel: #0e1d2e;
+    --muted: #cdddf3;
+    --accent: #00d6c1;
+    --warn: #ffdf6e;
+    --good: #7ee787;
+  }
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: #0f1115;
-    color: #e6e8eb;
-  }
-  header {
-    padding: 24px;
-    text-align: center;
-    border-bottom: 1px solid #23262d;
-    background: linear-gradient(180deg, #161a24 0%, #0f1115 100%);
-  }
-  h1 {
-    margin: 0;
-    font-size: 22px;
-    letter-spacing: 0.5px;
-  }
-  .sub {
-    margin-top: 6px;
-    color: #9aa0a6;
-    font-size: 13px;
-  }
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 24px 16px 64px;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
-  .card {
-    background: #161a24;
-    border: 1px solid #23262d;
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
-  }
-  .card h2 {
-    margin: 0 0 10px;
-    font-size: 16px;
-    color: #ffd54a;
-  }
-  .card ul {
-    margin: 0;
-    padding-left: 18px;
-    line-height: 1.6;
-    color: #d8dce2;
-  }
-  .callout {
-    margin-top: 20px;
-    background: #1c2230;
-    border-left: 4px solid #60c0f8;
-    padding: 16px 18px;
-    border-radius: 8px;
-  }
-  .callout h2 {
-    margin: 0 0 8px;
-    color: #60c0f8;
-  }
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #9aa0a6;
-    font-size: 12px;
-  }
-  .pill {
-    display: inline-block;
-    background: #23262d;
-    color: #e6e8eb;
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-size: 11px;
-    margin-right: 6px;
-  }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--muted); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif; }
+  a { color: var(--accent); text-decoration: none; }
+  header { position: sticky; top: 0; background: rgba(11,21,32,0.75); backdrop-filter: blur(8px); border-bottom: 1px solid #193040; padding: 14px 16px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .brand { font-weight: 700; color: var(--accent); }
+  main { padding: 18px; max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+  @media (max-width: 880px) { main { grid-template-columns: 1fr; } }
+  .card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid #192c3b; border-radius: 14px; padding: 14px; }
+  h2 { margin: 0 0 8px; font-size: 15px; color: #ffffff; }
+  .meta { font-size: 13px; color: #88a7c0; margin-bottom: 6px; }
+  ul { margin: 8px 0 0; padding-left: 18px; }
+  li + li { margin-top: 6px; line-height: 1.5; }
+  .pill { display: inline-block; padding: 3px 8px; border-radius: 999px; background: #13273b; color: var(--muted); border: 1px solid #224357; font-size: 11px; }
+  .callout { margin-top: 16px; background: #1c2230; border-left: 4px solid var(--accent); padding: 14px; border-radius: 10px; }
+  .callout h2 { color: var(--accent); }
+  .timestamp { font-size: 12px; color: #6b8299; margin-top: 10px; }
 </style>
 </head>
 <body>
-<header>
-  <h1>Newton's AI — Daily Brief</h1>
-  <div class="sub" id="datetime"></div>
-</header>
-<main class="container">
-  <div class="grid">
-    <div class="card">
-      <h2>🌅 Morning Brief</h2>
-      <ul>
-        <li><span class="pill">KPI</span> Overnight pipeline: <strong>38</strong> new opportunities</li>
-        <li><span class="pill">Alert</span> 3 deals >$10k move to next stage</li>
-        <li><span class="pill">Action</span> Outreach cadence review at 10:00</li>
-        <li><span class="pill">Focus</span> Q3 pipeline coverage back on target</li>
-      </ul>
+  <header>
+    <div>
+      <div class="brand">Newtons AI</div>
+      <div class="meta">Daily Brief — latest available session summary</div>
     </div>
-    <div class="card">
-      <h2>🌆 Evening Review</h2>
-      <ul>
-        <li><span class="pill">Meetings</span> 6 demos completed</li>
-        <li><span class="pill">Won</span> Alpha — $18,500 annual contract</li>
-        <li><span class="pill">Blocked</span> Beta lab testing delayed by 2 days</li>
-        <li><span class="pill">Score</span> Team attainment: <strong>72%</strong> of monthly goal</li>
-      </ul>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <a class="pill" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a>
+      <a class="pill" href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a>
     </div>
-  </div>
+  </header>
 
-  <div class="callout">
-    <h2>⚡ Top Action</h2>
-    <ul>
-      <li>Follow up with <strong>Beta</strong> by EOD to unlock Q3 close</li>
-      <li>Send updated proposal to <strong>Gamma</strong> and book technical review</li>
-    </ul>
-  </div>
-</main>
-<footer>© 2026 Newton's AI · Built by shiva452648</footer>
-<script>
-  const el = document.getElementById('datetime');
-  const now = new Date();
-  el.textContent = now.toLocaleString('en-GB', { hour: '2-digit', minute:'2-digit', second:'2-digit', day:'2-digit', month:'short', year:'numeric', timeZoneName:'short' });
-</script>
+  <main>
+    <section class="card">
+      <h2>🌅 Today’s Summary</h2>
+      <div class="meta">Morning Brief</div>
+      <ul>
+        <li><span class="pill">Status</span> No new customer, partner, or support messages found in the last 24h.</li>
+        <li><span class="pill">Deals</span> No HMS, franchise, partnership, or pricing conversations found in the last 24h.</li>
+        <li><span class="pill">NEET PG</span> No student-related messages or inquiries in the last 24h.</li>
+        <li><span class="pill">Support</span> No open support tickets or complaints found in the last 24h.</li>
+        <li><span class="pill">Resolved</span> No completed items or resolved leads found in the last 24h.</li>
+      </ul>
+    </section>
+
+    <section class="callout">
+      <h2>🚀 Today’s priorities</h2>
+      <ul>
+        <li>Verify that both daily automated jobs are running correctly.</li>
+        <li>Confirm live message delivery is reaching the right channel.</li>
+        <li>Monitor for overnight leads and respond to the first one first.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🌙 Today’s Suggestions</h2>
+      <div class="meta">Evening Review</div>
+      <ul>
+        <li><span class="pill">Business</span> Add a 1-week “Easy HMS Upgrade” offer with targeted messaging to existing doctors.</li>
+        <li><span class="pill">Business</span> Schedule 2–3 partnership calls with allied healthcare platforms this week.</li>
+        <li><span class="pill">Ops</span> Batch outreach tasks for follow-ups only on fixed days.</li>
+        <li><span class="pill">Ops</span> Repurpose demo clips into short-form video content each week.</li>
+        <li><span class="pill">Personal</span> Keep a consistent 11 PM bedtime.</li>
+        <li><span class="pill">Personal</span> Add short movement breaks before 10 AM.</li>
+      </ul>
+      <div class="timestamp">Refreshed from the latest available session history.</div>
+    </section>
+  </main>
 </body>
 </html>
