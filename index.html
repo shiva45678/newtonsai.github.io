@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Newtons AI — Daily Brief</title>
 <meta name="color-scheme" content="dark light" />
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <style>
   :root {
     color-scheme: dark light;
@@ -32,6 +35,9 @@
   .callout { margin-top: 16px; background: #1c2230; border-left: 4px solid var(--accent); padding: 14px; border-radius: 10px; }
   .callout h2 { color: var(--accent); }
   .timestamp { font-size: 12px; color: #6b8299; margin-top: 10px; }
+  .topbar { display: flex; gap: 8px; align-items: center; }
+  .badge { padding: 4px 8px; border-radius: 999px; background: #13273b; border: 1px solid #224357; color: var(--muted); font-size: 11px; }
+  button.badge { color: var(--accent); cursor: pointer; }
 </style>
 </head>
 <body>
@@ -40,16 +46,18 @@
       <div class="brand">Newtons AI</div>
       <div class="meta">Daily Brief — latest available session summary</div>
     </div>
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <a class="pill" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a>
-      <a class="pill" href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a>
+    <div class="topbar">
+      <span class="badge" id="build">auto-reload: on</span>
+      <button class="badge" id="refreshBtn" onclick="window.location.reload(true)">Refresh now</button>
+      <a class="badge" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a>
+      <a class="badge" href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a>
     </div>
   </header>
 
   <main>
     <section class="card">
       <h2>🌅 Today’s Summary</h2>
-      <div class="meta">Morning Brief</div>
+      <div class="meta">Morning Brief — June 16, 2026</div>
       <ul>
         <li><span class="pill">Status</span> No new customer, partner, or support messages found in the last 24h.</li>
         <li><span class="pill">Deals</span> No HMS, franchise, partnership, or pricing conversations found in the last 24h.</li>
@@ -62,25 +70,65 @@
     <section class="callout">
       <h2>🚀 Today’s priorities</h2>
       <ul>
-        <li>Verify that both daily automated jobs are running correctly.</li>
-        <li>Confirm live message delivery is reaching the right channel.</li>
-        <li>Monitor for overnight leads and respond to the first one first.</li>
+        <li>Verify the new 08:00 IST and 18:00 IST cron jobs are running correctly.</li>
+        <li>If live inbox processing is needed, enable the webhook-based hookup.</li>
+        <li>Monitor for any night leads and respond to one first.</li>
       </ul>
     </section>
 
     <section class="card">
-      <h2>🌙 Today’s Suggestions</h2>
-      <div class="meta">Evening Review</div>
+      <h2>🌙 Evening Review — June 16, 2026</h2>
+      <div class="meta">Improvement Suggestions</div>
       <ul>
-        <li><span class="pill">Business</span> Add a 1-week “Easy HMS Upgrade” offer with targeted messaging to existing doctors.</li>
-        <li><span class="pill">Business</span> Schedule 2–3 partnership calls with allied healthcare platforms this week.</li>
-        <li><span class="pill">Ops</span> Batch outreach tasks for follow-ups only on fixed days.</li>
-        <li><span class="pill">Ops</span> Repurpose demo clips into short-form video content each week.</li>
-        <li><span class="pill">Personal</span> Keep a consistent 11 PM bedtime.</li>
-        <li><span class="pill">Personal</span> Add short movement breaks before 10 AM.</li>
+        <li><span class="pill">Business</span> <b>Easy HMS Upgrade offer:</b> 1-week targeted messaging to existing doctors | Effort: Medium | Impact: 4</li>
+        <li><span class="pill">Business</span> <b>Partnerships:</b> Schedule 2–3 calls with allied healthcare platforms this week | Effort: Medium | Impact: 4</li>
+        <li><span class="pill">Business</span> <b>Onboarding survey:</b> Add a 5-question post day-1 survey to catch friction fast | Effort: Low | Impact: 4</li>
+        <li><span class="pill">Workflow</span> <b>Protect builder time:</b> block 9–11 AM for deep work; move admin/calls to 2–5 PM | Effort: Low | Impact: 4</li>
+        <li><span class="pill">Workflow</span> <b>Demo follow-ups:</b> automate reminders for demo-no-show leads | Effort: Medium | Impact: 4</li>
+        <li><span class="pill">Workflow</span> <b>Content repurposing:</b> batch-record 5 quick demo clips weekly for Shorts/Reels | Effort: Low | Impact: 3</li>
+        <li><span class="pill">Personal</span> <b>Sleep:</b> enforce 11 PM bedtime + 10-minute wind-down | Effort: Low | Impact: 5</li>
+        <li><span class="pill">Personal</span> <b>Movement:</b> add two 30-minute strength sessions | Effort: Medium | Impact: 5</li>
+        <li><span class="pill">Personal</span> <b>Family time:</b> phone-free hour after 7 PM | Effort: Medium | Impact: 4</li>
       </ul>
-      <div class="timestamp">Refreshed from the latest available session history.</div>
+      <div class="timestamp">Auto-refreshes regularly for freshest data. Updated: June 16, 2026.</div>
     </section>
   </main>
+
+  <script>
+    try {
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    } catch (e) {}
+
+(() => {
+  const FORCE_MINUTES = 30;
+  const reload = () => {
+    try { window.location.reload(true); } catch (e) {}
+  };
+  if ('serviceWorker' in navigator && 'SyncManager' in window) {
+    // Prefer cache invalidation via service worker if available.
+    // The no-store meta tags still provide a fallback.
+  }
+  const lastKey = 'dailyBriefLastReload';
+  const nowMs = Date.now();
+  const last = Number(localStorage.getItem(lastKey) || '0');
+  const gap = FORCE_MINUTES * 60 * 1000;
+  if (nowMs - last >= gap) {
+    reload();
+    try { localStorage.setItem(lastKey, String(nowMs)); } catch (e) {}
+  }
+  setInterval(() => {
+    const nowMs = Date.now();
+    const last = Number(localStorage.getItem(lastKey) || '0');
+    if (nowMs - last >= gap) {
+      reload();
+      try { localStorage.setItem(lastKey, String(nowMs)); } catch (e) {}
+    }
+  }, gap);
+})();
+  </script>
 </body>
 </html>
