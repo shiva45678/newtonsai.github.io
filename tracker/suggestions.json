@@ -1,0 +1,84 @@
+{
+  "2026-06-16": {
+    "date": "2026-06-16",
+    "suggestions": [
+      {
+        "id": "b1",
+        "area": "Business",
+        "text": "Add a 1-week Easy HMS Upgrade offer with targeted messaging to existing doctors.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-20"
+      },
+      {
+        "id": "b2",
+        "area": "Business",
+        "text": "Schedule 2-3 partnership calls with allied healthcare platforms this week.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-19"
+      },
+      {
+        "id": "b3",
+        "area": "Business",
+        "text": "Ship a 5-question post day-1 doctor onboarding survey to catch friction fast.",
+        "effort": "Low",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Newtons AI Team",
+        "due": "2026-06-18"
+      },
+      {
+        "id": "o1",
+        "area": "Workflow",
+        "text": "Block 9-11 AM for deep product/builder work; move admin/calls to 2-5 PM.",
+        "effort": "Low",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-17"
+      },
+      {
+        "id": "o2",
+        "area": "Workflow",
+        "text": "Automate follow-up reminders for demo-no-show leads in CRM.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Newtons AI Team",
+        "due": "2026-06-21"
+      },
+      {
+        "id": "p1",
+        "area": "Personal",
+        "text": "Enforce 11 PM bedtime with a 10-minute wind-down routine.",
+        "effort": "Low",
+        "impact": 5,
+        "status": "todo",
+        "result": "",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-17"
+      },
+      {
+        "id": "p2",
+        "area": "Personal",
+        "text": "Add two 30-minute strength sessions.",
+        "effort": "Medium",
+        "impact": 5,
+        "status": "todo",
+        "result": "",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-19"
+      }
+    ]
+  }
+}
