@@ -57,6 +57,7 @@
       <a class="badge" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a>
       <a class="badge" href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a>
       <button class="badge" id="purgeCacheBtn">Purge cache</button>
+      <button class="badge" id="installBtn">Install app</button>
     </div>
   </header>
 
@@ -156,6 +157,58 @@
       try { localStorage.setItem(lastKey, String(nowMs)); } catch (e) {}
     }
   }, gap);
+})();
+
+(() => {
+  const btn = document.getElementById('installBtn');
+  if (!btn) return;
+  const show = (prompt) => {
+    btn.textContent = 'Install app';
+    btn.disabled = false;
+    btn._prompt = prompt;
+  };
+  const hide = () => {
+    btn.textContent = 'Install';
+    btn.disabled = true;
+    btn._prompt = null;
+  };
+  let deferredPrompt = null;
+  const install = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      hide();
+      return;
+    }
+    if ('serviceWorker' in navigator) {
+      try {
+        await navigator.serviceWorker.ready;
+        const opts = { name: 'newtons-brief-v1' };
+        if ('showNotification' in ServiceWorkerRegistration.prototype) {
+          const reg = await navigator.serviceWorker.ready;
+          // Best-effort hint; not a guarantee of install availability.
+        }
+      } catch (e) {
+        // best-effort only
+      }
+    }
+    btn.textContent = 'Use browser menu to install';
+    setTimeout(hide, 2500);
+  };
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    show(deferredPrompt);
+  });
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    hide();
+  });
+  btn.addEventListener('click', install);
+  if (!deferredPrompt) {
+    btn.textContent = 'Install app';
+  }
 })();
   </script>
 </body>
