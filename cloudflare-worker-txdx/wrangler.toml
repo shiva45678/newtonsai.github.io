@@ -1,0 +1,4 @@
+name = "daily-txdx"
+main = "src/index.ts"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2026-06-16"
