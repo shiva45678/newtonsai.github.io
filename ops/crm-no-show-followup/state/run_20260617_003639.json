@@ -1,0 +1,121 @@
+{
+  "run_ts": "2026-06-17T00:36:39.628086",
+  "dry_run": false,
+  "leads_processed": 3,
+  "messages_queued": [
+    {
+      "lead": "chat_1001",
+      "target_name": "Dr. Mehta - City Hospital",
+      "touch": 1,
+      "channel": "in_app",
+      "template": "templates/touch1_t0_immediate.txt",
+      "demo_date": "2026-06-17",
+      "demo_slot": "11:00"
+    },
+    {
+      "lead": "chat_1001",
+      "target_name": "Dr. Mehta - City Hospital",
+      "touch": 2,
+      "channel": "in_app",
+      "template": "templates/touch2_t1_next_day.txt",
+      "demo_date": "2026-06-17",
+      "demo_slot": "11:00"
+    },
+    {
+      "lead": "chat_1001",
+      "target_name": "Dr. Mehta - City Hospital",
+      "touch": 3,
+      "channel": "in_app",
+      "template": "templates/touch3_t3_followup.txt",
+      "demo_date": "2026-06-17",
+      "demo_slot": "11:00"
+    },
+    {
+      "lead": "chat_1001",
+      "target_name": "Dr. Mehta - City Hospital",
+      "touch": 4,
+      "channel": "in_app",
+      "template": "templates/touch4_t7_winback.txt",
+      "demo_date": "2026-06-17",
+      "demo_slot": "11:00"
+    },
+    {
+      "lead": "chat_1002",
+      "target_name": "Clinic Apollo Admin",
+      "touch": 1,
+      "channel": "in_app",
+      "template": "templates/touch1_t0_immediate.txt",
+      "demo_date": "2026-06-15",
+      "demo_slot": "15:30"
+    },
+    {
+      "lead": "chat_1002",
+      "target_name": "Clinic Apollo Admin",
+      "touch": 2,
+      "channel": "in_app",
+      "template": "templates/touch2_t1_next_day.txt",
+      "demo_date": "2026-06-15",
+      "demo_slot": "15:30"
+    },
+    {
+      "lead": "chat_1002",
+      "target_name": "Clinic Apollo Admin",
+      "touch": 3,
+      "channel": "in_app",
+      "template": "templates/touch3_t3_followup.txt",
+      "demo_date": "2026-06-15",
+      "demo_slot": "15:30"
+    },
+    {
+      "lead": "chat_1002",
+      "target_name": "Clinic Apollo Admin",
+      "touch": 4,
+      "channel": "in_app",
+      "template": "templates/touch4_t7_winback.txt",
+      "demo_date": "2026-06-15",
+      "demo_slot": "15:30"
+    },
+    {
+      "lead": "chat_1003",
+      "target_name": "NovaCare Ops Lead",
+      "touch": 1,
+      "channel": "in_app",
+      "template": "templates/touch1_t0_immediate.txt",
+      "demo_date": "2026-06-13",
+      "demo_slot": "10:00"
+    },
+    {
+      "lead": "chat_1003",
+      "target_name": "NovaCare Ops Lead",
+      "touch": 2,
+      "channel": "in_app",
+      "template": "templates/touch2_t1_next_day.txt",
+      "demo_date": "2026-06-13",
+      "demo_slot": "10:00"
+    },
+    {
+      "lead": "chat_1003",
+      "target_name": "NovaCare Ops Lead",
+      "touch": 3,
+      "channel": "in_app",
+      "template": "templates/touch3_t3_followup.txt",
+      "demo_date": "2026-06-13",
+      "demo_slot": "10:00"
+    },
+    {
+      "lead": "chat_1003",
+      "target_name": "NovaCare Ops Lead",
+      "touch": 4,
+      "channel": "in_app",
+      "template": "templates/touch4_t7_winback.txt",
+      "demo_date": "2026-06-13",
+      "demo_slot": "10:00"
+    }
+  ],
+  "escalated": [
+    "chat_1001",
+    "chat_1002",
+    "chat_1003"
+  ],
+  "errors": []
+}

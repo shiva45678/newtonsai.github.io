@@ -1,0 +1,10 @@
+Hi {{target_name}}, just checking in about the missed {{product}} demo on {{demo_date}}.
+
+Quick note: we are running a short onboarding-style demo this week that is more focused and faster than the full walkthrough — could be a better fit.
+
+Reschedule here: {{booking_link}}
+
+If it is not a fit right now, a one-word reply works too.
+
+Cheers,
+{{rep_name}}

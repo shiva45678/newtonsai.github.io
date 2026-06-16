@@ -1,1 +1,8 @@
-{}
+{
+  "2026-06-17": ["b3", "b1", "b2", "o2"],
+  "2026-06-17_notes": {
+    "b1": "Campaign-ready 1-week Easy HMS Upgrade message targeting existing doctors. Artifacts at newtons-success-dashboard/outreach/",
+    "b2": "Partnership call package (talking points, agenda, post-call templates, CSV leads). Artifacts at newtons-success-dashboard/outreach/",
+    "o2": "CRM no-show follow-up automation package built at newtonsai-daily-brief/ops/crm-no-show-followup with runner, templates, schedule and run state."
+  }
+}

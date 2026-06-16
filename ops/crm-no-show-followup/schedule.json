@@ -1,0 +1,78 @@
+{
+  "followup": {
+    "name": "CRM No-Show Follow-Up Automation",
+    "owner": "Newtons AI Team",
+    "area": "Workflow",
+    "dashboard_item": "o2",
+    "description": "Automated outreach for demo-no-show leads in CRM.",
+    "leads_source": "CRM - filter demo_status=no_show AND followup_sent=false",
+    "lead_schema": {
+      "chat_id": "unique_chat_identifier",
+      "target_name": "display_name in chat",
+      "demo_date": "YYYY-MM-DD",
+      "demo_slot": "HH:MM",
+      "language": "en|local",
+      "preferred_time_window": "morning|afternoon|evening"
+    },
+    "schedule": {
+      "strategy": "multi_touch",
+      "touches": [
+        {
+          "touch": 1,
+          "delay_hours": 2,
+          "window": "T+2h after missed slot",
+          "channel": "in_app",
+          "template_ref": "templates/touch1_t0_immediate.txt"
+        },
+        {
+          "touch": 2,
+          "delay_hours": 26,
+          "window": "next business morning ~9-11 AM",
+          "channel": "in_app",
+          "template_ref": "templates/touch2_t1_next_day.txt"
+        },
+        {
+          "touch": 3,
+          "delay_hours": 72,
+          "window": "day 3 morning ~9 AM",
+          "channel": "in_app",
+          "template_ref": "templates/touch3_t3_followup.txt"
+        },
+        {
+          "touch": 4,
+          "delay_hours": 168,
+          "window": "day 7 ~10 AM (soft winback)",
+          "channel": "in_app",
+          "template_ref": "templates/touch4_t7_winback.txt"
+        }
+      ],
+      "quiet_hours": {
+        "start": "21:00",
+        "end": "09:00"
+      },
+      "business_days_only": true,
+      "max_retries": 4,
+      "escalation": {
+        "after_touch": 4,
+        "action": "flag_for_sdr_review",
+        "note": "SDR to call within 24h; mark lead as 'needs_manual_followup'"
+      }
+    },
+    "placeholders": [
+      "{{target_name}}",
+      "{{demo_date}}",
+      "{{demo_slot}}",
+      "{{rep_name}}",
+      "{{booking_link}}",
+      "{{company}}",
+      "{{product}}"
+    ],
+    "runtime": {
+      "idempotent_run": true,
+      "state_file": "state/run_state.json",
+      "log_file": "state/run.log",
+      "dry_run_default": true,
+      "auto_advance_touch": true
+    }
+  }
+}

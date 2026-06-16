@@ -1,0 +1,12 @@
+Hi {{target_name}}, hope you are doing well.
+
+We missed you at the {{product}} demo scheduled for {{demo_date}} at {{demo_slot}}. 
+I understand things come up — no worries at all.
+
+If you are still interested, I can help you reschedule at your convenience.
+Just pick a time here: {{booking_link}}
+
+If this is not the right time, no pressure — I will check in again in a couple of days.
+
+Thanks,
+{{rep_name}}

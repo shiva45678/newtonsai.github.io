@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Newtons AI — Doctor Onboarding Survey</title>
+<meta name="color-scheme" content="dark light" />
+<meta name="theme-color" content="#00d6c1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  color-scheme: dark light;
+  --bg: #0b1520;
+  --panel: #0e1d2e;
+  --muted: #cdddf3;
+  --accent: #00d6c1;
+  --warn: #ffdf6e;
+  --good: #7ee787;
+  --danger: #ff9a8b;
+  --border: #192c3b;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 800px at 10% -10%, #11283a 0%, transparent 60%),
+    radial-gradient(900px 600px at 110% 10%, #0f1f2b 0%, transparent 55%),
+    var(--bg);
+  color: var(--muted);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: contain;
+}
+a { color: var(--accent); text-decoration: none; }
+
+header {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(11,21,32,0.78);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+  padding: 14px env(safe-area-inset-right, 14px) 14px env(safe-area-inset-left, 14px);
+  display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;
+}
+.brand { font-weight: 800; color: #fff; letter-spacing: 0.2px; }
+.meta { font-size: 13px; color: #88a7c0; margin-top: 2px; }
+
+main {
+  padding: 16px env(safe-area-inset-right, 16px) 32px env(safe-area-inset-left, 16px);
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr; gap: 14px;
+}
+@media (max-width: 980px) { main { grid-template-columns: 1fr; } }
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid var(--border); border-radius: 16px; padding: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transition: transform .15s ease;
+}
+.card:hover { transform: translateY(-1px); }
+
+h1 { margin: 0 0 8px; font-size: 18px; color: #fff; }
+h2 { margin: 0 0 8px; font-size: 15px; color: #fff; }
+.meta { font-size: 13px; color: #88a7c0; margin-bottom: 8px; }
+
+ul { margin: 6px 0 14px; padding-left: 18px; }
+li + li { margin-top: 6px; line-height: 1.45; }
+
+.kpis {
+  margin-top: 8px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+@media (max-width: 700px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+
+.kpi {
+  background: linear-gradient(180deg, #122a3a, #0d1f2b);
+  border: 1px solid #1b2f40; border-radius: 14px; padding: 14px;
+  text-align: center;
+}
+.kpi .value { font-size: 24px; font-weight: 800; color: #fff; }
+.kpi .label { font-size: 12px; color: #8aa6bf; margin-top: 4px; }
+
+.pill {
+  display: inline-block; padding: 4px 10px; border-radius: 999px;
+  background: #13273b; color: var(--muted); border: 1px solid #224357; font-size: 11px;
+}
+
+.status-dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--good);
+  box-shadow: 0 0 0 0 rgba(126,231,135,0.4);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(126,231,135,0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(126,231,135,0); }
+  100% { box-shadow: 0 0 0 0 rgba(126,231,135,0); }
+}
+
+fieldset {
+  border: 1px solid var(--border); border-radius: 14px; padding: 12px; background: rgba(14,29,46,0.6);
+  margin: 0 0 12px;
+}
+legend {
+  color: #fff; font-weight: 700; padding: 0 8px;
+}
+label.option {
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; border: 1px solid transparent;
+  background: #0f1f2b; color: var(--muted);
+}
+label.option:hover { border-color: #224357; }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--accent); transform: scale(1.05); }
+
+textarea, input[type="text"] {
+  width: 100%; background: #0c1926; color: #e8f1f8; border: 1px solid #1d3144; border-radius: 12px; padding: 12px;
+  font-family: inherit; font-size: 14px;
+}
+textarea { min-height: 96px; resize: vertical; }
+
+button.primary {
+  background: #00d6c1; color: #082b2a; border: 0; border-radius: 12px; padding: 12px 14px; font-weight: 800; font-size: 14px; cursor: pointer;
+}
+button.primary:hover { filter: brightness(1.05); }
+
+.toast {
+  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+  background: #122a3a; color: var(--good); border: 1px solid #1f3344;
+  padding: 10px 14px; border-radius: 12px; font-size: 13px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+}
+.toast.show { opacity: 1; }
+
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.chip {
+  padding: 10px 12px; border-radius: 12px; background: #12243a; border: 1px solid #1f3344; min-width: 130px; flex: 1;
+}
+.chip .num { font-size: 20px; font-weight: 800; color: #fff; }
+.chip .lbl { font-size: 12px; color: #8aa6bf; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">Newtons AI</div>
+    <div class="meta"><span class="status-dot" aria-hidden="true"></span> <span id="statusText">Live</span> · <span id="lastUpdated">just now</span></div>
+  </div>
+</header>
+
+<main>
+  <section class="card" style="grid-column: 1 / -1;" aria-labelledby="surveyHeading">
+    <h1 id="surveyHeading">Day-1 Doctor Onboarding Survey</h1>
+    <div class="meta">Goal: catch friction fast. ~2 minutes to complete.</div>
+
+    <form id="surveyForm" novalidate>
+      <fieldset>
+        <legend>1) Setup speed</legend>
+        <div class="meta">How long did it take to get fully set up on day 1?</div>
+        <label class="option"><input type="radio" name="setup_speed" value="under_30" required /> Under 30 minutes</label>
+        <label class="option"><input type="radio" name="setup_speed" value="30_60" /> 30–60 minutes</label>
+        <label class="option"><input type="radio" name="setup_speed" value="60_120" /> 1–2 hours</label>
+        <label class="option"><input type="radio" name="setup_speed" value="over_2" /> Over 2 hours / incomplete</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>2) Clarity of first task</legend>
+        <div class="meta">Were your first tasks clear enough to start confidently?</div>
+        <label class="option"><input type="radio" name="first_task_clarity" value="very_clear" required /> Very clear</label>
+        <label class="option"><input type="radio" name="first_task_clarity" value="mostly_clear" /> Mostly clear</label>
+        <label class="option"><input type="radio" name="first_task_clarity" value="somewhat_unclear" /> Somewhat unclear</label>
+        <label class="option"><input type="radio" name="first_task_clarity" value="blocked" /> Blocked / had to ask for help</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>3) Biggest friction point</legend>
+        <div class="meta">What slowed you down the most today? (pick one)</div>
+        <label class="option"><input type="radio" name="biggest_friction" value="login_access" required /> Login / access issues</label>
+        <label class="option"><input type="radio" name="biggest_friction" value="data_entry" /> Data entry / forms</label>
+        <label class="option"><input type="radio" name="biggest_friction" value="tool_ui" /> Tool UI / navigation</label>
+        <label class="option"><input type="radio" name="biggest_friction" value="instructions" /> Missing / unclear instructions</label>
+        <label class="option"><input type="radio" name="biggest_friction" value="integration" /> Integrations / connectivity</label>
+        <label class="option"><input type="radio" name="biggest_friction" value="other" /> Other</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>4) Confidence using Notes / Orders</legend>
+        <div class="meta">How confident do you feel creating a note or order right now?</div>
+        <label class="option"><input type="radio" name="confidence" value="confident" required /> Confident</label>
+        <label class="option"><input type="radio" name="confidence" value="mostly_confident" /> Mostly confident</label>
+        <label class="option"><input type="radio" name="confidence" value="unsure" /> Unsure</label>
+        <label class="option"><input type="radio" name="confidence" value="not_confident" /> Not confident</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>5) Open feedback</legend>
+        <div class="meta">What’s one thing we should fix before your next shift?</div>
+        <textarea id="feedback" name="feedback" placeholder="Optional but extremely helpful…"></textarea>
+      </fieldset>
+
+      <div class="grid2" style="margin-top: 10px;">
+        <div>
+          <div class="meta">Doctor ID / Name (optional)</div>
+          <input type="text" id="doctorId" name="doctorId" placeholder="e.g., DOC-1042 or Dr. Name" />
+        </div>
+        <div>
+          <div class="meta">Facility / Location (optional)</div>
+          <input type="text" id="facility" name="facility" placeholder="e.g., Anantapur OPD" />
+        </div>
+      </div>
+
+      <div class="actions" style="margin-top: 14px;">
+        <button type="submit" class="primary">Submit feedback</button>
+        <button type="button" id="resetBtn">Reset</button>
+      </div>
+      <div class="meta" style="margin-top: 8px;">Responses are stored locally in this browser for demo purposes.</div>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="resultsHeading">
+    <h2 id="resultsHeading">Live results</h2>
+    <div class="meta">Aggregated from local submissions.</div>
+    <div class="chart-wrap" style="height: 220px; margin-top: 8px;">
+      <canvas id="setupChart" aria-label="Setup speed chart" role="img"></canvas>
+    </div>
+    <div class="chart-wrap" style="height: 220px; margin-top: 10px;">
+      <canvas id="frictionChart" aria-label="Biggest friction chart" role="img"></canvas>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="quickActionsHeading">
+    <h2 id="quickActionsHeading">Quick actions</h2>
+    <div class="meta">Use these to verify, export, or inspect data.</div>
+    <div class="grid2">
+      <div class="chip"><div class="num" id="responseCount">0</div><div class="lbl">Total responses</div></div>
+      <div class="chip"><div class="num" id="avgSetupLabel">—</div><div class="lbl">Avg setup speed</div></div>
+    </div>
+    <div class="actions" style="margin-top: 12px;">
+      <button type="button" id="exportBtn">Export JSON</button>
+      <button type="button" id="clearBtn">Clear local data</button>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Saved</div>
+
+<script>
+const STORAGE_KEY = 'newtons_onboarding_survey_v1';
+const form = document.getElementById('surveyForm');
+const toast = document.getElementById('toast');
+const responseCountEl = document.getElementById('responseCount');
+const avgSetupLabelEl = document.getElementById('avgSetupLabel');
+
+const load = () => {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch (e) { return []; }
+};
+const save = (data) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+};
+
+const showToast = (msg) => {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1600);
+};
+
+const avgSetupLabel = (speed) => {
+  const map = { under_30: '<30m', '30_60': '30–60m', '60_120': '1–2h', over_2: '>2h' };
+  return map[speed] || '—';
+};
+const avgSetupMinutes = (speed) => {
+  const map = { under_30: 20, '30_60': 45, '60_120': 90, over_2: 150 };
+  return map[speed] || 0;
+};
+
+const computeStats = () => {
+  const data = load();
+  responseCountEl.textContent = data.length;
+  if (!data.length) { avgSetupLabelEl.textContent = '—'; return; }
+  const total = data.reduce((sum, r) => sum + avgSetupMinutes(r.setup_speed), 0);
+  avgSetupLabelEl.textContent = Math.round(total / data.length) + 'm avg';
+};
+
+const buildSetupChart = () => {
+  const data = load();
+  const labels = ['<30m', '30–60m', '1–2h', '>2h'];
+  const counts = [0,0,0,0];
+  data.forEach(r => {
+    const idx = ['under_30','30_60','60_120','over_2'].indexOf(r.setup_speed);
+    if (idx >= 0) counts[idx] += 1;
+  });
+  const ctx = document.getElementById('setupChart').getContext('2d');
+  if (window._setupChart) window._setupChart.destroy();
+  window._setupChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label: 'Responses', data: counts, backgroundColor: '#00d6c1', borderRadius: 6 }]
+    },
+    options: {
+      plugins: { legend: { labels: { color: '#8aa6bf' } } },
+      scales: {
+        x: { ticks: { color: '#8aa6bf' }, grid: { color: '#12243a' } },
+        y: { ticks: { color: '#8aa6bf', stepSize: 1 }, grid: { color: '#12243a' }, beginAtZero: true }
+      }
+    }
+  });
+};
+
+const frictionLabels = {
+  login_access: 'Login / access', data_entry: 'Data entry / forms', tool_ui: 'Tool UI / nav',
+  instructions: 'Instructions', integration: 'Integrations', other: 'Other'
+};
+
+const buildFrictionChart = () => {
+  const data = load();
+  const map = {};
+  data.forEach(r => { map[r.biggest_friction] = (map[r.biggest_friction] || 0) + 1; });
+  const keys = Object.keys(frictionLabels);
+  const values = keys.map(k => map[k] || 0);
+  const ctx = document.getElementById('frictionChart').getContext('2d');
+  if (window._frictionChart) window._frictionChart.destroy();
+  window._frictionChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: keys.map(k => frictionLabels[k]),
+      datasets: [{ label: 'Responses', data: values, backgroundColor: '#7ee787', borderRadius: 6 }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend: { labels: { color: '#8aa6bf' } } },
+      scales: {
+        x: { ticks: { color: '#8aa6bf', stepSize: 1 }, grid: { color: '#12243a' }, beginAtZero: true },
+        y: { ticks: { color: '#8aa6bf' }, grid: { color: '#12243a' } }
+      }
+    }
+  });
+};
+
+const refreshCharts = () => {
+  computeStats();
+  buildSetupChart();
+  buildFrictionChart();
+};
+
+const isValid = () => {
+  const required = ['setup_speed', 'first_task_clarity', 'biggest_friction', 'confidence'];
+  return required.every(name => form.querySelector(`[name="${name}"]:checked`));
+};
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!isValid()) { showToast('Please answer all required questions.'); return; }
+  const data = load();
+  const record = {
+    submittedAt: new Date().toISOString(),
+    doctorId: document.getElementById('doctorId').value.trim(),
+    facility: document.getElementById('facility').value.trim(),
+    setup_speed: form.querySelector('[name="setup_speed"]:checked').value,
+    first_task_clarity: form.querySelector('[name="first_task_clarity"]:checked').value,
+    biggest_friction: form.querySelector('[name="biggest_friction"]:checked').value,
+    confidence: form.querySelector('[name="confidence"]:checked').value,
+    feedback: document.getElementById('feedback').value.trim()
+  };
+  data.push(record);
+  save(data);
+  form.reset();
+  refreshCharts();
+  showToast('Feedback saved locally.');
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (confirm('Clear current answers?')) form.reset();
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const data = load();
+  if (!data.length) { showToast('No responses yet.'); return; }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'newtons_onboarding_responses.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  showToast('Exported JSON');
+});
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  if (!confirm('Delete all locally stored responses?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  refreshCharts();
+  showToast('Local data cleared');
+});
+
+refreshCharts();
+</script>
+</body>
+</html>

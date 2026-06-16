@@ -1,0 +1,102 @@
+{
+  "runs": [],
+  "leads": {
+    "chat_1001": {
+      "touch_sent": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "history": [
+        {
+          "ts": "2026-06-17T00:36:39.628086",
+          "touch": 1,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.628086",
+          "touch": 2,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.629094",
+          "touch": 3,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.629094",
+          "touch": 4,
+          "status": "sent"
+        }
+      ],
+      "escalated": true,
+      "escalated_at": "2026-06-17T00:36:55.256605"
+    },
+    "chat_1002": {
+      "touch_sent": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "history": [
+        {
+          "ts": "2026-06-17T00:36:39.630094",
+          "touch": 1,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.630094",
+          "touch": 2,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.630094",
+          "touch": 3,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.631091",
+          "touch": 4,
+          "status": "sent"
+        }
+      ],
+      "escalated": true,
+      "escalated_at": "2026-06-17T00:36:55.257605"
+    },
+    "chat_1003": {
+      "touch_sent": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "history": [
+        {
+          "ts": "2026-06-17T00:36:39.632598",
+          "touch": 1,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.632598",
+          "touch": 2,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.632598",
+          "touch": 3,
+          "status": "sent"
+        },
+        {
+          "ts": "2026-06-17T00:36:39.633599",
+          "touch": 4,
+          "status": "sent"
+        }
+      ],
+      "escalated": true,
+      "escalated_at": "2026-06-17T00:36:55.257605"
+    }
+  },
+  "last_run_ts": "2026-06-17T00:36:55.258684"
+}

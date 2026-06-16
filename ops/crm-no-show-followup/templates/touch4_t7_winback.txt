@@ -1,0 +1,9 @@
+Hi {{target_name}}, soft ping from my side.
+
+We did not get to connect for the {{product}} demo originally set for {{demo_date}}. I wanted to leave the door open in case your priorities shifted and you want to revisit it.
+
+Use this link if useful: {{booking_link}}
+
+No response needed — this is just a note so you have it on hand.
+
+{{rep_name}}

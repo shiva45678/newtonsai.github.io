@@ -1,0 +1,12 @@
+{
+  "run_ts": "2026-06-17T00:36:55.256605",
+  "dry_run": false,
+  "leads_processed": 3,
+  "messages_queued": [],
+  "escalated": [
+    "chat_1001",
+    "chat_1002",
+    "chat_1003"
+  ],
+  "errors": []
+}

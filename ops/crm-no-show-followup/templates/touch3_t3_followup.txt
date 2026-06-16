@@ -1,0 +1,11 @@
+Hi {{target_name}}, a couple of days back your {{product}} demo on {{demo_date}} got missed.
+
+I am guessing this one is not a priority right now. Totally fine.
+
+Still, I did not want you to miss the option to revisit it later. If you are open to it:
+Book here -> {{booking_link}}
+
+Otherwise, I will switch to low-touch mode so I do not clutter your chat.
+
+Best,
+{{rep_name}}

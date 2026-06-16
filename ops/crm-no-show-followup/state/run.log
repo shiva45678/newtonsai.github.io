@@ -1,0 +1,22 @@
+[2026-06-17 00:36:39] QUEUED touch 1 -> Dr. Mehta - City Hospital (chat_1001) via in_app
+[2026-06-17 00:36:39] QUEUED touch 2 -> Dr. Mehta - City Hospital (chat_1001) via in_app
+[2026-06-17 00:36:39] QUEUED touch 3 -> Dr. Mehta - City Hospital (chat_1001) via in_app
+[2026-06-17 00:36:39] QUEUED touch 4 -> Dr. Mehta - City Hospital (chat_1001) via in_app
+[2026-06-17 00:36:39] ESCALATE -> Dr. Mehta - City Hospital (chat_1001): flag for SDR review
+[2026-06-17 00:36:39] QUEUED touch 1 -> Clinic Apollo Admin (chat_1002) via in_app
+[2026-06-17 00:36:39] QUEUED touch 2 -> Clinic Apollo Admin (chat_1002) via in_app
+[2026-06-17 00:36:39] QUEUED touch 3 -> Clinic Apollo Admin (chat_1002) via in_app
+[2026-06-17 00:36:39] QUEUED touch 4 -> Clinic Apollo Admin (chat_1002) via in_app
+[2026-06-17 00:36:39] ESCALATE -> Clinic Apollo Admin (chat_1002): flag for SDR review
+[2026-06-17 00:36:39] QUEUED touch 1 -> NovaCare Ops Lead (chat_1003) via in_app
+[2026-06-17 00:36:39] QUEUED touch 2 -> NovaCare Ops Lead (chat_1003) via in_app
+[2026-06-17 00:36:39] QUEUED touch 3 -> NovaCare Ops Lead (chat_1003) via in_app
+[2026-06-17 00:36:39] QUEUED touch 4 -> NovaCare Ops Lead (chat_1003) via in_app
+[2026-06-17 00:36:39] ESCALATE -> NovaCare Ops Lead (chat_1003): flag for SDR review
+[2026-06-17 00:36:39] Run complete. Summary -> C:\Users\chandu\newtonsai-daily-brief\ops\crm-no-show-followup\state\latest_run_summary.json
+[2026-06-17 00:36:39] State saved at -> C:\Users\chandu\newtonsai-daily-brief\ops\crm-no-show-followup\state\run_state.json
+[2026-06-17 00:36:55] ESCALATE -> Dr. Mehta - City Hospital (chat_1001): flag for SDR review
+[2026-06-17 00:36:55] ESCALATE -> Clinic Apollo Admin (chat_1002): flag for SDR review
+[2026-06-17 00:36:55] ESCALATE -> NovaCare Ops Lead (chat_1003): flag for SDR review
+[2026-06-17 00:36:55] Run complete. Summary -> C:\Users\chandu\newtonsai-daily-brief\ops\crm-no-show-followup\state\latest_run_summary.json
+[2026-06-17 00:36:55] State saved at -> C:\Users\chandu\newtonsai-daily-brief\ops\crm-no-show-followup\state\run_state.json
