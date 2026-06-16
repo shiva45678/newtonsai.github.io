@@ -1,0 +1,1 @@
+Newtons AI is our flagship clinical AI platform. Quick ask, {{name}}: would you want a 10-minute look at how it reduces documentation time and improves decision support in your practice? Learn more: https://app.newtons.in

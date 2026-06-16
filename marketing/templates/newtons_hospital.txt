@@ -1,0 +1,1 @@
+Newtons Hospital offering is designed to improve care coordination and operational efficiency. Quick ask, {{name}}: would you want a 10-minute look at what it can do for your hospital? Learn more: https://hospital.newtons.in
