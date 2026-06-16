@@ -13,6 +13,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <link rel="apple-touch-icon" href="/icon-192.png" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
   :root {
     color-scheme: dark light;
@@ -22,194 +23,342 @@
     --accent: #00d6c1;
     --warn: #ffdf6e;
     --good: #7ee787;
+    --danger: #ff9a8b;
+    --border: #192c3b;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--muted); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif; }
+  body {
+    margin: 0;
+    background: radial-gradient(1200px 800px at 10% -10%, #11283a 0%, transparent 60%),
+                radial-gradient(900px 600px at 110% 10%, #0f1f2b 0%, transparent 55%),
+                var(--bg);
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
   a { color: var(--accent); text-decoration: none; }
-  header { position: sticky; top: 0; background: rgba(11,21,32,0.75); backdrop-filter: blur(8px); border-bottom: 1px solid #193040; padding: 14px 16px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
-  .brand { font-weight: 700; color: var(--accent); }
-  main { padding: 18px; max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
-  @media (max-width: 880px) { main { grid-template-columns: 1fr; } }
-  .card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid #192c3b; border-radius: 14px; padding: 14px; }
-  h2 { margin: 0 0 8px; font-size: 15px; color: #ffffff; }
-  .meta { font-size: 13px; color: #88a7c0; margin-bottom: 6px; }
-  ul { margin: 8px 0 0; padding-left: 18px; }
-  li + li { margin-top: 6px; line-height: 1.5; }
-  .pill { display: inline-block; padding: 3px 8px; border-radius: 999px; background: #13273b; color: var(--muted); border: 1px solid #224357; font-size: 11px; }
-  .callout { margin-top: 16px; background: #1c2230; border-left: 4px solid var(--accent); padding: 14px; border-radius: 10px; }
-  .callout h2 { color: var(--accent); }
-  .timestamp { font-size: 12px; color: #6b8299; margin-top: 10px; }
-  .topbar { display: flex; gap: 8px; align-items: center; }
-  .badge { padding: 4px 8px; border-radius: 999px; background: #13273b; border: 1px solid #224357; color: var(--muted); font-size: 11px; }
+
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(11,21,32,0.72);
+    backdrop-filter: blur(10px) saturate(140%);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px;
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  }
+  .brand { font-weight: 800; color: #fff; letter-spacing: 0.2px; }
+  .topbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .badge {
+    padding: 6px 10px; border-radius: 999px;
+    background: #12243a; color: var(--muted); border: 1px solid #224357; font-size: 12px;
+    transition: transform .08s ease, background .2s ease, color .2s ease;
+  }
   button.badge { color: var(--accent); cursor: pointer; }
+  button.badge:hover { background: #13303f; }
+
+  main {
+    padding: 18px; max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr; gap: 16px;
+  }
+  @media (max-width: 980px) { main { grid-template-columns: 1fr; } }
+
+  .card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid var(--border); border-radius: 16px; padding: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transition: transform .15s ease;
+  }
+  .card:hover { transform: translateY(-1px); }
+
+  h2 { margin: 0 0 10px; font-size: 15px; color: #fff; }
+  .meta { font-size: 13px; color: #88a7c0; margin-bottom: 8px; }
+
+  ul { margin: 6px 0 0; padding-left: 18px; }
+  li + li { margin-top: 6px; line-height: 1.45; }
+
+  .kpis {
+    margin-top: 8px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  @media (max-width: 700px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+
+  .kpi {
+    background: linear-gradient(180deg, #122a3a, #0d1f2b);
+    border: 1px solid #1b2f40; border-radius: 14px; padding: 12px;
+    text-align: center;
+  }
+  .kpi .value { font-size: 22px; font-weight: 800; color: #fff; }
+  .kpi .label { font-size: 12px; color: #8aa6bf; margin-top: 4px; }
+  .kpi .delta { font-size: 12px; margin-top: 4px; }
+  .delta.up { color: var(--good); }
+  .delta.down { color: var(--danger); }
+
+  .pill {
+    display: inline-block; padding: 3px 8px; border-radius: 999px;
+    background: #13273b; color: var(--muted); border: 1px solid #224357; font-size: 11px;
+  }
+
+  .callout {
+    margin-top: 16px; background: #12263a; border-left: 4px solid var(--accent);
+    padding: 14px; border-radius: 12px;
+  }
+  .callout h2 { color: var(--accent); }
+
+  .timestamp { font-size: 12px; color: #6b8299; margin-top: 10px; }
+
+  .chart-wrap { position: relative; height: 220px; }
+  .chart-wrap canvas { width: 100% !important; height: 100% !important; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
+
+  details { margin-top: 8px; }
+  summary { cursor: pointer; color: #c6d8e8; font-weight: 600; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+  .chip { padding: 8px 10px; border-radius: 12px; background: #12243a; border: 1px solid #1f3344; min-width: 140px; flex: 1; }
+  .chip .num { font-size: 18px; font-weight: 800; color: #fff; }
+  .chip .lbl { font-size: 12px; color: #8aa6bf; }
+
+  .toggle {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px;
+    background: #12243a; border: 1px solid #1f3344; color: var(--muted); font-size: 12px; cursor: pointer;
+  }
 </style>
 </head>
 <body>
   <header>
     <div>
       <div class="brand">Newtons AI</div>
-      <div class="meta">Daily Brief — latest available session summary</div>
+      <div class="meta">Daily Brief — interactive dashboard</div>
     </div>
     <div class="topbar">
+      <span class="badge" id="clock"></span>
       <span class="badge" id="build">auto-reload: on</span>
-      <button class="badge" id="refreshBtn" onclick="window.location.reload(true)">Refresh now</button>
-      <a class="badge" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a>
-      <a class="badge" href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a>
+      <button class="badge" id="refreshBtn">Refresh now</button>
       <button class="badge" id="purgeCacheBtn">Purge cache</button>
       <button class="badge" id="installBtn">Install app</button>
+      <a class="badge" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a>
+      <label class="toggle"><input type="checkbox" id="soundToggle" />Sound</label>
     </div>
   </header>
 
   <main>
-    <section class="card">
-      <h2>🌅 Today’s Summary</h2>
-      <div class="meta">Morning Brief — June 16, 2026</div>
-      <ul>
-        <li><span class="pill">Status</span> No new customer, partner, or support messages found in the last 24h.</li>
-        <li><span class="pill">Deals</span> No HMS, franchise, partnership, or pricing conversations found in the last 24h.</li>
-        <li><span class="pill">NEET PG</span> No student-related messages or inquiries in the last 24h.</li>
-        <li><span class="pill">Support</span> No open support tickets or complaints found in the last 24h.</li>
-        <li><span class="pill">Resolved</span> No completed items or resolved leads found in the last 24h.</li>
-      </ul>
+    <section class="card" style="grid-column: 1 / -1;">
+      <h2>🌅 Morning Brief</h2>
+      <div class="meta">Latest snapshots from your recent channel activity</div>
+      <div class="kpis">
+        <div class="kpi">
+          <div class="value" id="kpiInbox">0</div>
+          <div class="label">Inbox (24h)</div>
+          <div class="delta up" id="kpiInboxDelta">—</div>
+        </div>
+        <div class="kpi">
+          <div class="value" id="kpiDeals">0</div>
+          <div class="label">Open deals</div>
+          <div class="delta up" id="kpiDealsDelta">—</div>
+        </div>
+        <div class="kpi">
+          <div class="value" id="kpiSupport">0</div>
+          <div class="label">Open tickets</div>
+          <div class="delta down" id="kpiSupportDelta">—</div>
+        </div>
+        <div class="kpi">
+          <div class="value" id="kpiResolved">0</div>
+          <div class="label">Resolved today</div>
+          <div class="delta up" id="kpiResolvedDelta">+0</div>
+        </div>
+      </div>
     </section>
 
-    <section class="callout">
-      <h2>🚀 Today’s priorities</h2>
-      <ul>
-        <li>Verify the new 08:00 IST and 18:00 IST cron jobs are running correctly.</li>
-        <li>If live inbox processing is needed, enable the webhook-based hookup.</li>
-        <li>Monitor for any night leads and respond to one first.</li>
-      </ul>
+    <section class="card">
+      <h2>📈 Pipeline</h2>
+      <div class="chart-wrap"><canvas id="pipelineChart"></canvas></div>
     </section>
 
     <section class="card">
+      <h2>🎯 Conversion</h2>
+      <div class="chart-wrap"><canvas id="conversionChart"></canvas></div>
+    </section>
+
+    <section class="card">
+      <h2>⏱ Response time</h2>
+      <div class="chart-wrap"><canvas id="responseChart"></canvas></div>
+    </section>
+
+    <section class="card">
+      <h2>🧵 Channel mix</h2>
+      <div class="chart-wrap"><canvas id="channelChart"></canvas></div>
+    </section>
+
+    <section class="card" style="grid-column: 1 / -1;">
       <h2>🌙 Evening Review — June 16, 2026</h2>
       <div class="meta">Improvement Suggestions</div>
-      <ul>
-        <li><span class="pill">Business</span> <b>Easy HMS Upgrade offer:</b> 1-week targeted messaging to existing doctors | Effort: Medium | Impact: 4</li>
-        <li><span class="pill">Business</span> <b>Partnerships:</b> Schedule 2–3 calls with allied healthcare platforms this week | Effort: Medium | Impact: 4</li>
-        <li><span class="pill">Business</span> <b>Onboarding survey:</b> Add a 5-question post day-1 survey to catch friction fast | Effort: Low | Impact: 4</li>
-        <li><span class="pill">Workflow</span> <b>Protect builder time:</b> block 9–11 AM for deep work; move admin/calls to 2–5 PM | Effort: Low | Impact: 4</li>
-        <li><span class="pill">Workflow</span> <b>Demo follow-ups:</b> automate reminders for demo-no-show leads | Effort: Medium | Impact: 4</li>
-        <li><span class="pill">Workflow</span> <b>Content repurposing:</b> batch-record 5 quick demo clips weekly for Shorts/Reels | Effort: Low | Impact: 3</li>
-        <li><span class="pill">Personal</span> <b>Sleep:</b> enforce 11 PM bedtime + 10-minute wind-down | Effort: Low | Impact: 5</li>
-        <li><span class="pill">Personal</span> <b>Movement:</b> add two 30-minute strength sessions | Effort: Medium | Impact: 5</li>
-        <li><span class="pill">Personal</span> <b>Family time:</b> phone-free hour after 7 PM | Effort: Medium | Impact: 4</li>
-      </ul>
-      <div class="timestamp">Auto-refreshes regularly for freshest data. Updated: June 16, 2026.</div>
+      <div class="grid2">
+        <div>
+          <h2 style="font-size:14px;">📈 Business</h2>
+          <ul>
+            <li><span class="pill">Medium</span> <b>Easy HMS Upgrade offer:</b> 1-week targeted messaging to existing doctors | Impact: 4</li>
+            <li><span class="pill">Medium</span> <b>Partnerships:</b> Schedule 2–3 calls with allied healthcare platforms this week | Impact: 4</li>
+            <li><span class="pill">Low</span> <b>Onboarding survey:</b> Add a 5-question post day-1 survey | Impact: 4</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">⚙️ Workflow</h2>
+          <ul>
+            <li><span class="pill">Low</span> <b>Protect builder time:</b> block 9–11 AM for deep work; move admin/calls to 2–5 PM</li>
+            <li><span class="pill">Medium</span> <b>Demo follow-ups:</b> automate reminders for demo-no-show leads</li>
+            <li><span class="pill">Low</span> <b>Content repurposing:</b> batch-record 5 quick demo clips weekly</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">🧘 Personal</h2>
+          <ul>
+            <li><span class="pill">Low</span> <b>Sleep:</b> enforce 11 PM bedtime + 10-minute wind-down</li>
+            <li><span class="pill">Medium</span> <b>Movement:</b> add two 30-minute strength sessions</li>
+            <li><span class="pill">Medium</span> <b>Family time:</b> phone-free hour after 7 PM</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="font-size:14px;">🧭 Priorities</h2>
+          <ul>
+            <li>Verify the 08:00 IST and 18:00 IST cron jobs are running correctly</li>
+            <li>If needed, enable live inbox processing via webhook</li>
+            <li>Monitor overnight leads and respond to the first one</li>
+          </ul>
+          <details>
+            <summary>Details / actions</summary>
+            <ul>
+              <li><a href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a></li>
+              <li><a href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a></li>
+            </ul>
+          </details>
+        </div>
+      </div>
+      <div class="timestamp">Auto-refreshes regularly for freshest data.</div>
     </section>
   </main>
 
   <script>
-    try {
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
-        });
-      }
-    } catch (e) {}
+    const soundToggle = document.getElementById('soundToggle');
+    const play = (type) => {
+      if (!soundToggle || !soundToggle.checked) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type === 'alert' ? 'sawtooth' : 'sine';
+        osc.frequency.value = type === 'alert' ? 520 : 660;
+        gain.gain.value = 0.04;
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(); setTimeout(() => { gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.15); osc.stop(ctx.currentTime + 0.18); }, 120);
+      } catch (e) {}
+    };
 
-    try {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.addEventListener('message', (event) => {
-          if (event.data === 'purged') {
-            window.location.reload(true);
-          }
-        });
-      }
-    } catch (e) {}
+    const updateTime = () => {
+      const el = document.getElementById('clock');
+      if (!el) return;
+      try { el.textContent = new Date().toLocaleString('en-GB', { hour: '2-digit', minute:'2-digit', second:'2-digit', day:'2-digit', month:'short', year:'numeric', timeZoneName:'short' }); } catch (e) {}
+    };
+    updateTime(); setInterval(updateTime, 1000);
 
-    try {
-      const purgeBtn = document.getElementById('purgeCacheBtn');
-      if (purgeBtn && 'serviceWorker' in navigator) {
-        purgeBtn.addEventListener('click', async () => {
+    document.getElementById('refreshBtn')?.addEventListener('click', () => window.location.reload(true));
+
+    document.getElementById('purgeCacheBtn')?.addEventListener('click', () => {
+      if ('serviceWorker' in navigator) {
+        (async () => {
           const reg = await navigator.serviceWorker.ready;
           reg.active?.postMessage('purge');
-        });
-      } else if (purgeBtn) {
-        purgeBtn.addEventListener('click', () => window.location.reload(true));
+          play('alert');
+        })();
+      } else {
+        window.location.reload(true);
       }
-    } catch (e) {}
+    });
 
-(() => {
-  const FORCE_MINUTES = 30;
-  const reload = () => {
-    try { window.location.reload(true); } catch (e) {}
-  };
-  if ('serviceWorker' in navigator && 'SyncManager' in window) {
-    // Prefer cache invalidation via service worker if available.
-    // The no-store meta tags still provide a fallback.
-  }
-  const lastKey = 'dailyBriefLastReload';
-  const nowMs = Date.now();
-  const last = Number(localStorage.getItem(lastKey) || '0');
-  const gap = FORCE_MINUTES * 60 * 1000;
-  if (nowMs - last >= gap) {
-    reload();
-    try { localStorage.setItem(lastKey, String(nowMs)); } catch (e) {}
-  }
-  setInterval(() => {
-    const nowMs = Date.now();
-    const last = Number(localStorage.getItem(lastKey) || '0');
-    if (nowMs - last >= gap) {
-      reload();
-      try { localStorage.setItem(lastKey, String(nowMs)); } catch (e) {}
-    }
-  }, gap);
-})();
+    const applyThemeDefaults = () => {
+      const isDark = true;
+      document.documentElement.style.setProperty('--bg', isDark ? '#0b1520' : '#f5f7fb');
+      document.documentElement.style.setProperty('--muted', isDark ? '#cdddf3' : '#243042');
+    };
+    applyThemeDefaults();
 
-(() => {
-  const btn = document.getElementById('installBtn');
-  if (!btn) return;
-  const show = (prompt) => {
-    btn.textContent = 'Install app';
-    btn.disabled = false;
-    btn._prompt = prompt;
-  };
-  const hide = () => {
-    btn.textContent = 'Install';
-    btn.disabled = true;
-    btn._prompt = null;
-  };
-  let deferredPrompt = null;
-  const install = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      hide();
-      return;
-    }
-    if ('serviceWorker' in navigator) {
-      try {
-        await navigator.serviceWorker.ready;
-        const opts = { name: 'newtons-brief-v1' };
-        if ('showNotification' in ServiceWorkerRegistration.prototype) {
-          const reg = await navigator.serviceWorker.ready;
-          // Best-effort hint; not a guarantee of install availability.
-        }
-      } catch (e) {
-        // best-effort only
+    const common = {
+      color: (ctx2) => {
+        const c = ctx2.chart.config?.color ?? ['#00d6c1','#7ee787','#ffdf6e','#60c0f8','#c084fc','#ff9a8b'];
+        return c[ctx2.dataIndex % c.length];
+      },
+      borderColor: '#00d6c1',
+      plugins: { legend: { labels: { color: '#8aa6bf' } } },
+      scales: {
+        x: { ticks: { color: '#8aa6bf' }, grid: { color: '#12243a' } },
+        y: { ticks: { color: '#8aa6bf' }, grid: { color: '#12243a' } }
       }
-    }
-    btn.textContent = 'Use browser menu to install';
-    setTimeout(hide, 2500);
-  };
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    show(deferredPrompt);
-  });
-  window.addEventListener('appinstalled', () => {
-    deferredPrompt = null;
-    hide();
-  });
-  btn.addEventListener('click', install);
-  if (!deferredPrompt) {
-    btn.textContent = 'Install app';
-  }
-})();
+    };
+
+    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+    new Chart(document.getElementById('pipelineChart'), {
+      type: 'line',
+      data: {
+        labels: days,
+        datasets: [
+          { label: 'Qualified', data: [12,19,15,22,18,25,20], tension: 0.35 },
+          { label: 'Proposal', data: [8,12,10,14,11,15,13], tension: 0.35 },
+          { label: 'Negotiation', data: [4,7,5,9,6,10,8], tension: 0.35 }
+        ]
+      },
+      options: { ...common, plugins: { legend: { labels: { color: '#8aa6bf' } } } }
+    });
+
+    new Chart(document.getElementById('conversionChart'), {
+      type: 'bar',
+      data: {
+        labels: days,
+        datasets: [
+          { label: 'Leads', data: [120,150,110,170,140,190,160], backgroundColor: '#122a3a' },
+          { label: 'Conversions', data: [30,45,25,60,40,70,50], backgroundColor: '#00d6c1' }
+        ]
+      },
+      options: common
+    });
+
+    new Chart(document.getElementById('responseChart'), {
+      type: 'line',
+      data: {
+        labels: days,
+        datasets: [
+          { label: 'Avg mins', data: [45,38,52,29,34,22,31], tension: 0.4 },
+          { label: 'Target', data: Array.from({length:7}, () => 30), borderDash: [5,5], pointRadius: 0 }
+        ]
+      },
+      options: common
+    });
+
+    new Chart(document.getElementById('channelChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['WhatsApp','Telegram','Web','Phone','Email'],
+        datasets: [{ data: [38,24,20,12,6], backgroundColor: ['#00d6c1','#7ee787','#ffdf6e','#60c0f8','#c084fc'] }]
+      },
+      options: { cutout: '62%', plugins: { legend: { position: 'bottom', labels: { color: '#8aa6bf' } } } }
+    });
+
+    (function animateCounters() {
+      const map = { kpiInbox: 24, kpiDeals: 9, kpiSupport: 3, kpiResolved: 6 };
+      Object.entries(map).forEach(([id, target]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        let n = 0;
+        const step = Math.max(1, Math.floor(target / 24));
+        const tick = () => {
+          n = Math.min(target, n + (target - n >= 10 ? step : 1));
+          el.textContent = n;
+          if (n < target) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    })();
   </script>
 </body>
 </html>
