@@ -1,0 +1,19 @@
+{
+  "date": "2026-06-17",
+  "product": "newtons_hospital",
+  "targeted": 6,
+  "sent_count": 6,
+  "failed_count": 6,
+  "unresolved_targets": [
+    "whatsapp:Goutham kumar Naidu (dm)",
+    "whatsapp:Padmini (dm)",
+    "whatsapp:nagulmeerask869 (dm)",
+    "whatsapp:Manchineni Sowmya ⚕ (dm)",
+    "whatsapp:RAVI KUMAR NALLANI (dm)",
+    "whatsapp:Sai Sri (dm)"
+  ],
+  "send_mechanism": "simulated (send_message tool missing)",
+  "warnings": [
+    "No send_message tool available in this cron job environment; campaign not executed."
+  ]
+}

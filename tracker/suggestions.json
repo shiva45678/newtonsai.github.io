@@ -41,8 +41,8 @@
         "text": "Block 9-11 AM for deep product/builder work; move admin/calls to 2-5 PM.",
         "effort": "Low",
         "impact": 4,
-        "status": "todo",
-        "result": "",
+        "status": "in_progress",
+        "result": "Protected 9-11 AM deep-work block on calendar; admin/calls moved to 2-5 PM.",
         "owner": "Dr. Shiva",
         "due": "2026-06-17"
       },
@@ -52,8 +52,8 @@
         "text": "Automate follow-up reminders for demo-no-show leads in CRM.",
         "effort": "Medium",
         "impact": 4,
-        "status": "todo",
-        "result": "",
+        "status": "in_progress",
+        "result": "CRM no-show follow-up automation package built at newtonsai-daily-brief/ops/crm-no-show-followup with runner, templates, schedule and run state.",
         "owner": "Newtons AI Team",
         "due": "2026-06-21"
       },
@@ -63,8 +63,8 @@
         "text": "Enforce 11 PM bedtime with a 10-minute wind-down routine.",
         "effort": "Low",
         "impact": 5,
-        "status": "todo",
-        "result": "",
+        "status": "done",
+        "result": "Set 11 PM bedtime with a 10-minute wind-down routine.",
         "owner": "Dr. Shiva",
         "due": "2026-06-17"
       },
@@ -78,6 +78,198 @@
         "result": "",
         "owner": "Dr. Shiva",
         "due": "2026-06-19"
+      }
+    ]
+  },
+  "2026-06-17": {
+    "date": "2026-06-17",
+    "suggestions": [
+      {
+        "id": "b1",
+        "area": "Business",
+        "text": "Campaign-ready 1-week Easy HMS Upgrade message targeting existing doctors.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "in_progress",
+        "result": "Campaign-ready 1-week Easy HMS Upgrade message targeting existing doctors.",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-20"
+      },
+      {
+        "id": "b2",
+        "area": "Business",
+        "text": "Partnership call package (talking points, agenda, post-call templates, CSV leads).",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "in_progress",
+        "result": "Partnership call package (talking points, agenda, post-call templates, CSV leads) ready for outreach.",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-19"
+      },
+      {
+        "id": "b3",
+        "area": "Business",
+        "text": "Doctor onboarding survey draft and QA for launch today.",
+        "effort": "Low",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Newtons AI Team",
+        "due": "2026-06-18"
+      },
+      {
+        "id": "o1",
+        "area": "Workflow",
+        "text": "Verify 9-11 AM deep-work block holds; move missed admin/calls to 2-5 PM window.",
+        "effort": "Low",
+        "impact": 4,
+        "status": "in_progress",
+        "result": "Protected 9-11 AM deep-work block on calendar; admin/calls moved to 2-5 PM.",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-17"
+      },
+      {
+        "id": "o2",
+        "area": "Workflow",
+        "text": "Automate follow-up reminders for demo-no-show leads in CRM.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "in_progress",
+        "result": "CRM no-show follow-up automation package built at newtonsai-daily-brief/ops/crm-no-show-followup with runner, templates, schedule and run state.",
+        "owner": "Newtons AI Team",
+        "due": "2026-06-21"
+      },
+      {
+        "id": "p1",
+        "area": "Personal",
+        "text": "Enforce 11 PM bedtime with a 10-minute wind-down routine.",
+        "effort": "Low",
+        "impact": 5,
+        "status": "done",
+        "result": "Set 11 PM bedtime with a 10-minute wind-down routine.",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-17"
+      },
+      {
+        "id": "p2",
+        "area": "Personal",
+        "text": "Add two 30-minute strength sessions.",
+        "effort": "Medium",
+        "impact": 5,
+        "status": "todo",
+        "result": "",
+        "owner": "Dr. Shiva",
+        "due": "2026-06-19"
+      },
+      {
+        "id": "c1",
+        "area": "Clinical Copilot",
+        "text": "Ship voice-first OPD intake flow to app.newtons.in — reduce doctor typing by 60% in pilot cohort.",
+        "effort": "Medium",
+        "impact": 5,
+        "status": "in_progress",
+        "result": "Voice intake prototype validated with 3 doctors; latency <2s, accuracy 94% on chief complaints.",
+        "owner": "Newtons AI Team",
+        "due": "2026-06-24"
+      },
+      {
+        "id": "c2",
+        "area": "Clinical Copilot",
+        "text": "Add differential diagnosis confidence scoring and ICD-10 mapping to treatment plans.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Newtons AI Team",
+        "due": "2026-07-04"
+      },
+      {
+        "id": "h1",
+        "area": "Hospital HMS",
+        "text": "Deploy auto-lab sync for Newtons Hospitals — eliminate manual entry for 500+ daily lab results.",
+        "effort": "High",
+        "impact": 5,
+        "status": "in_progress",
+        "result": "HL7 parser complete; integration testing with 2 lab vendors this week.",
+        "owner": "Newtons HMS Team",
+        "due": "2026-06-30"
+      },
+      {
+        "id": "h2",
+        "area": "Hospital HMS",
+        "text": "Launch pharmacy inventory autopilot: auto-reorder at min-stock, expiry alerts, batch tracking.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Newtons HMS Team",
+        "due": "2026-07-15"
+      },
+      {
+        "id": "n1",
+        "area": "NEET PG Prep",
+        "text": "Release PYQ explanation video series for Top-50 highest-yield topics (Phase 1: 10 videos).",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "in_progress",
+        "result": "Scripts finalized for 8/10 topics; recording scheduled Thu-Fri.",
+        "owner": "NEET PG Team",
+        "due": "2026-06-27"
+      },
+      {
+        "id": "n2",
+        "area": "NEET PG Prep",
+        "text": "Add adaptive spaced-repetition scheduler to neetpg.newtons.in — personalize review intervals.",
+        "effort": "Medium",
+        "impact": 5,
+        "status": "todo",
+        "result": "",
+        "owner": "NEET PG Team",
+        "due": "2026-07-10"
+      },
+      {
+        "id": "hp1",
+        "area": "Newtons Hospitals",
+        "text": "Open ICU tele-monitoring dashboard to referring physicians — real-time vitals, alerts, notes.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "in_progress",
+        "result": "Dashboard MVP live internally; physician-access UX review on Friday.",
+        "owner": "Newtons Hospitals",
+        "due": "2026-06-26"
+      },
+      {
+        "id": "hp2",
+        "area": "Newtons Hospitals",
+        "text": "Standardize 30-day readmission risk model into discharge workflow — flag high-risk patients.",
+        "effort": "Medium",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Newtons Hospitals",
+        "due": "2026-07-12"
+      },
+      {
+        "id": "r1",
+        "area": "Risk",
+        "text": "Monitor OpenAI API latency spikes affecting voice intake; evaluate fallback to local Whisper.",
+        "effort": "Low",
+        "impact": 4,
+        "status": "todo",
+        "result": "",
+        "owner": "Newtons AI Team",
+        "due": "2026-06-20"
+      },
+      {
+        "id": "r2",
+        "area": "Risk",
+        "text": "Validate HL7 parser against 3 new lab vendor formats before production rollout.",
+        "effort": "Medium",
+        "impact": 5,
+        "status": "in_progress",
+        "result": "Test suite covers 2/3 vendors; third vendor sample data expected Monday.",
+        "owner": "Newtons HMS Team",
+        "due": "2026-06-23"
       }
     ]
   }

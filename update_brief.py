@@ -12,7 +12,7 @@ import random
 import html as ihtml
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "index.html"
 
 MORNING = [

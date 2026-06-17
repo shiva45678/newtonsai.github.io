@@ -2,570 +2,123 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Newtons AI — Daily Brief</title>
-<meta name="color-scheme" content="dark light" />
-<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#00d6c1" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<link rel="apple-touch-icon" href="/icon-192.png" />
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Newton's AI Daily Brief</title>
 <style>
-  :root {
-    color-scheme: dark light;
-    --bg: #0b1520;
-    --panel: #0e1d2e;
-    --muted: #cdddf3;
-    --accent: #00d6c1;
-    --warn: #ffdf6e;
-    --good: #7ee787;
-    --danger: #ff9a8b;
-    --border: #192c3b;
-  }
   * { box-sizing: border-box; }
-  html, body { height: 100%; }
   body {
     margin: 0;
-    background:
-      radial-gradient(1200px 800px at 10% -10%, #11283a 0%, transparent 60%),
-      radial-gradient(900px 600px at 110% 10%, #0f1f2b 0%, transparent 55%),
-      var(--bg);
-    color: var(--muted);
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    overscroll-behavior-y: contain;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0f1115;
+    color: #e6e8eb;
   }
-  a { color: var(--accent); text-decoration: none; }
-
   header {
-    position: sticky; top: 0; z-index: 10;
-    background: rgba(11,21,32,0.78);
-    backdrop-filter: blur(12px) saturate(140%);
-    -webkit-backdrop-filter: blur(12px) saturate(140%);
-    border-bottom: 1px solid var(--border);
-    padding: 14px env(safe-area-inset-right, 14px) 14px env(safe-area-inset-left, 14px);
-    display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  }
-  .brand { font-weight: 800; color: #fff; letter-spacing: 0.2px; }
-  .meta { font-size: 13px; color: #88a7c0; margin-top: 2px; }
-
-  .topbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .badge {
-    padding: 8px 10px; border-radius: 999px;
-    background: #12243a; color: var(--muted); border: 1px solid #224357; font-size: 12px;
-    min-height: 38px;
-    transition: transform .08s ease, background .2s ease, color .2s ease;
-  }
-  button.badge { color: var(--accent); cursor: pointer; }
-  button.badge:hover { background: #13303f; }
-  button.badge:active { transform: scale(0.98); }
-
-  main {
-    padding: 16px env(safe-area-inset-right, 16px) 32px env(safe-area-inset-left, 16px);
-    max-width: 1100px; margin: 0 auto;
-    display: grid; grid-template-columns: 2fr 1fr; gap: 14px;
-  }
-  @media (max-width: 980px) { main { grid-template-columns: 1fr; } }
-
-  .card {
-    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-    border: 1px solid var(--border); border-radius: 16px; padding: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    transition: transform .15s ease;
-  }
-  .card:hover { transform: translateY(-1px); }
-
-  h2 { margin: 0 0 10px; font-size: 15px; color: #fff; }
-  .meta { font-size: 13px; color: #88a7c0; margin-bottom: 8px; }
-
-  ul { margin: 6px 0 0; padding-left: 18px; }
-  li + li { margin-top: 6px; line-height: 1.45; }
-
-  .kpis {
-    margin-top: 8px;
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-  }
-  @media (max-width: 700px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
-
-  .kpi {
-    background: linear-gradient(180deg, #122a3a, #0d1f2b);
-    border: 1px solid #1b2f40; border-radius: 14px; padding: 14px;
+    padding: 24px;
     text-align: center;
+    border-bottom: 1px solid #23262d;
+    background: linear-gradient(180deg, #161a24 0%, #0f1115 100%);
   }
-  .kpi .value { font-size: 24px; font-weight: 800; color: #fff; }
-  .kpi .label { font-size: 12px; color: #8aa6bf; margin-top: 4px; }
-  .kpi .delta { font-size: 12px; margin-top: 4px; }
-  .delta.up { color: var(--good); }
-  .delta.down { color: var(--danger); }
-
-  .pill {
-    display: inline-block; padding: 4px 10px; border-radius: 999px;
-    background: #13273b; color: var(--muted); border: 1px solid #224357; font-size: 11px;
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 0.5px;
   }
-
+  .sub {
+    margin-top: 6px;
+    color: #9aa0a6;
+    font-size: 13px;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: #161a24;
+    border: 1px solid #23262d;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
+  }
+  .card h2 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #ffd54a;
+  }
+  .card ul {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.6;
+    color: #d8dce2;
+  }
   .callout {
-    margin-top: 16px; background: #12263a; border-left: 4px solid var(--accent);
-    padding: 14px; border-radius: 12px;
+    margin-top: 20px;
+    background: #1c2230;
+    border-left: 4px solid #60c0f8;
+    padding: 16px 18px;
+    border-radius: 8px;
   }
-  .callout h2 { color: var(--accent); }
-
-  .timestamp { font-size: 12px; color: #6b8299; margin-top: 10px; }
-
-  .chart-wrap { position: relative; height: 220px; }
-  .chart-wrap canvas { width: 100% !important; height: 100% !important; }
-
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
-
-  details { margin-top: 8px; }
-  summary { cursor: pointer; color: #c6d8e8; font-weight: 600; }
-
-  .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
-  .chip {
-    padding: 10px 12px; border-radius: 12px; background: #12243a; border: 1px solid #1f3344;
-    min-width: 130px; flex: 1;
+  .callout h2 {
+    margin: 0 0 8px;
+    color: #60c0f8;
   }
-  .chip .num { font-size: 20px; font-weight: 800; color: #fff; }
-  .chip .lbl { font-size: 12px; color: #8aa6bf; }
-
-  .status-dot {
-    display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--good);
-    box-shadow: 0 0 0 0 rgba(126,231,135,0.4);
-    animation: pulse 2s infinite;
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #9aa0a6;
+    font-size: 12px;
   }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(126,231,135,0.4); }
-    70% { box-shadow: 0 0 0 8px rgba(126,231,135,0); }
-    100% { box-shadow: 0 0 0 0 rgba(126,231,135,0); }
+  .pill {
+    display: inline-block;
+    background: #23262d;
+    color: #e6e8eb;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    margin-right: 6px;
+    vertical-align: middle;
   }
-
-  .skeleton {
-    background: linear-gradient(90deg, #0f1f2b 25%, #16303d 50%, #0f1f2b 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.4s infinite;
-    border-radius: 10px;
-  }
-  @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-  .sk-text { height: 12px; margin: 6px 0; }
-  .sk-chart { height: 180px; margin: 8px 0; }
-  .sk-kpi { height: 56px; }
-
-  .offline-toast {
-    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-    background: #122a3a; color: var(--warn); border: 1px solid #2a4050;
-    padding: 10px 14px; border-radius: 12px; font-size: 13px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    opacity: 0; pointer-events: none; transition: opacity .2s ease;
-  }
-  .offline-toast.show { opacity: 1; }
-.a11y-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.snippet{position:relative}
-.snippet textarea{width:100%;min-height:96px;background:#0c1926;color:#e8f1f8;border:1px solid #1d3144;border-radius:12px;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;resize:vertical}
-.copy-btn{position:absolute;top:8px;right:8px;background:#122a3a;color:var(--accent);border:1px solid #1f3344;border-radius:10px;padding:6px 10px;font-size:12px;cursor:pointer}
-.copy-btn:hover{background:#13303f}
 </style>
 </head>
 <body>
-  <header>
-    <div>
-      <div class="brand">Newtons AI</div>
-      <div class="meta"><span class="status-dot" aria-hidden="true"></span> <span id="statusText">Live</span> · <span id="lastUpdated">just now</span></div>
+<header>
+  <h1>Newton's AI — Daily Brief</h1>
+  <div class="sub">Wednesday, 17 Jun 2026 · 12:40:11 UTC</div>
+</header>
+<main class="container">
+  <div class="grid">
+    <div class="card">
+      <h2>Morning Brief</h2>
+      <ul>
+        <li><span class="pill">Focus</span> Q3 pipeline coverage back on target</li>
+<li><span class="pill">Alert</span> 4 deals &gt;$10k move to next stage</li>
+      </ul>
     </div>
-    <div class="topbar">
-      <span class="badge" id="clock" aria-live="polite" aria-label="Current time"></span>
-      <button class="badge" id="refreshBtn" aria-label="Refresh now">Refresh now</button>
-      <button class="badge" id="purgeCacheBtn" aria-label="Purge cache">Purge cache</button>
-      <button class="badge" id="installBtn" aria-label="Install application">Install app</button>
-      <button class="badge" id="notifBtn" aria-label="Enable notifications">🔔</button>
-      <a class="badge" href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener" aria-label="Open GitHub repository">Repo</a>
+    <div class="card">
+      <h2>Evening Review</h2>
+      <ul>
+        <li><span class="pill">Blocked</span> Beta lab testing delayed by 5 days</li>
+<li><span class="pill">Score</span> Team attainment: <strong>63%</strong> of monthly goal</li>
+      </ul>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <section class="card" style="grid-column: 1 / -1;" aria-labelledby="morningHeading">
-      <h2 id="morningHeading">🌅 Morning Brief</h2>
-      <div class="meta">Latest snapshots from your recent channel activity</div>
-      <div class="kpis" id="kpis">
-        <div class="kpi"><div class="skeleton sk-kpi"></div></div>
-        <div class="kpi"><div class="skeleton sk-kpi"></div></div>
-        <div class="kpi"><div class="skeleton sk-kpi"></div></div>
-        <div class="kpi"><div class="skeleton sk-kpi"></div></div>
-      </div>
-    </section>
-
-    <section class="card" aria-labelledby="pipelineHeading">
-      <h2 id="pipelineHeading">📈 Pipeline</h2>
-      <div class="chart-wrap"><div class="skeleton sk-chart" id="skPipeline"></div><canvas id="pipelineChart" aria-label="Pipeline chart" role="img" style="display:none;"></canvas></div>
-    </section>
-
-    <section class="card" aria-labelledby="conversionHeading">
-      <h2 id="conversionHeading">🎯 Conversion</h2>
-      <div class="chart-wrap"><div class="skeleton sk-chart" id="skConversion"></div><canvas id="conversionChart" aria-label="Conversion chart" role="img" style="display:none;"></canvas></div>
-    </section>
-
-    <section class="card" aria-labelledby="responseHeading">
-      <h2 id="responseHeading">⏱ Response time</h2>
-      <div class="chart-wrap"><div class="skeleton sk-chart" id="skResponse"></div><canvas id="responseChart" aria-label="Response time chart" role="img" style="display:none;"></canvas></div>
-    </section>
-
-    <section class="card" aria-labelledby="channelHeading">
-      <h2 id="channelHeading">🧵 Channel mix</h2>
-      <div class="chart-wrap"><div class="skeleton sk-chart" id="skChannel"></div><canvas id="channelChart" aria-label="Channel mix chart" role="img" style="display:none;"></canvas></div>
-    </section>
-
-    <section class="card" style="grid-column: 1 / -1;">
-      <h2>🌙 Evening Review — June 16, 2026</h2>
-      <div class="meta">Improvement Suggestions</div>
-      <div class="grid2">
-        <div>
-          <h2 style="font-size:14px;">📈 Business</h2>
-          <ul>
-            <li><span class="pill">Medium</span> <b>Easy HMS Upgrade offer:</b> 1-week targeted messaging to existing doctors | Impact: 4</li>
-            <li><span class="pill">Medium</span> <b>Partnerships:</b> Schedule 2–3 calls with allied healthcare platforms this week | Impact: 4</li>
-            <li><span class="pill">Low</span> <b>Onboarding survey:</b> Add a 5-question post day-1 survey | Impact: 4</li>
-          </ul>
-        </div>
-        <div>
-          <h2 style="font-size:14px;">⚙️ Workflow</h2>
-          <ul>
-            <li><span class="pill">Low</span> <b>Protect builder time:</b> block 9–11 AM for deep work; move admin/calls to 2–5 PM</li>
-            <li><span class="pill">Medium</span> <b>Demo follow-ups:</b> automate reminders for demo-no-show leads</li>
-            <li><span class="pill">Low</span> <b>Content repurposing:</b> batch-record 5 quick demo clips weekly</li>
-          </ul>
-        </div>
-        <div>
-          <h2 style="font-size:14px;">🧘 Personal</h2>
-          <ul>
-            <li><span class="pill">Low</span> <b>Sleep:</b> enforce 11 PM bedtime + 10-minute wind-down</li>
-            <li><span class="pill">Medium</span> <b>Movement:</b> add two 30-minute strength sessions</li>
-            <li><span class="pill">Medium</span> <b>Family time:</b> phone-free hour after 7 PM</li>
-          </ul>
-        </div>
-        <div>
-          <h2 style="font-size:14px;">🧭 Priorities</h2>
-          <ul>
-            <li>Verify the 08:00 IST and 18:00 IST cron jobs are running correctly</li>
-            <li>If needed, enable live inbox processing via webhook</li>
-            <li>Monitor overnight leads and respond to the first one</li>
-          </ul>
-          <details>
-            <summary>Details / actions</summary>
-            <ul>
-              <li><a href="https://github.com/shiva45678/newtonsai.github.io" target="_blank" rel="noopener">Repo</a></li>
-              <li><a href="https://t.me/drnewtonsai" target="_blank" rel="noopener">Telegram</a></li>
-            </ul>
-          </details>
-        </div>
-      </div>
-      <div class="timestamp">Auto-refreshes regularly for freshest data.</div>
-      <h2 class="a11y-sr-only">Copy normalized input tool</h2>
-      <div class="snippet" style="margin-top:14px;">
-        <button class="copy-btn" id="copySnippetBtn" type="button">Copy</button>
-        <textarea id="normalizedSnippet" aria-label="Normalized input">Normalized Input:
-location=remote
-company=Newtons AI
-role=Doctor
-interest=Clinical AI, Hospital HMS
-source=website
-timeline=This week
-budget=Yes
-decision_maker=Yes
-notes=Interested in demo and pricing
-
-Outreach:
-- Send demo link
-- Share pricing
-- Follow up by EOD</textarea>
-      </div>
-      <span class="timestamp" id="copyStatus" role="status" aria-live="polite"></span>
-    </section>
-
-    <section class="card" style="grid-column: 1 / -1;">
-      <h2>📋 Suggestion → Result Board — June 16, 2026</h2>
-      <div class="meta">Status of improvements suggested earlier</div>
-      <div class="grid2" id="resultBoard">
-        <div>
-          <h2 style="font-size:14px;">✅ Done</h2>
-          <ul>
-            <li><span class="pill">Workflow</span> Protected 9–11 AM deep-work block; admin/calls shifted to 2–5 PM.</li>
-            <li><span class="pill">Personal</span> 11 PM bedtime + 10-minute wind-down routine set.</li>
-          </ul>
-        </div>
-        <div>
-          <h2 style="font-size:14px;">🕓 In progress</h2>
-          <ul>
-            <li><span class="pill">Workflow</span> Demo follow-up reminder automation being wired.</li>
-          </ul>
-        </div>
-        <div>
-          <h2 style="font-size:14px;">🗳 Todo</h2>
-          <ul>
-            <li><span class="pill">Business</span> Easy HMS Upgrade offer drafting.</li>
-            <li><span class="pill">Business</span> Partnership calls scheduling.</li>
-            <li><span class="pill">Business</span> Doctor onboarding survey draft.</li>
-          </ul>
-        </div>
-        <div>
-          <h2 style="font-size:14px;">📈 Daily outcome</h2>
-          <div class="chip"><div class="num">2</div><div class="lbl">Done today</div></div>
-          <div class="chip"><div class="num">1</div><div class="lbl">In progress</div></div>
-          <div class="chip"><div class="num">3</div><div class="lbl">Remaining</div></div>
-        </div>
-      </div>
-      <div class="timestamp">Updated automatically from latest brief.</div>
-    </section>
-  </main>
-
-  <div class="offline-toast" id="offlineToast" role="status" aria-live="polite">Offline — showing cached data</div>
-
-  <script>
-    const soundToggle = { get checked() { return true; } };
-    const play = (type) => {
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = type === 'alert' ? 'sawtooth' : 'sine';
-        osc.frequency.value = type === 'alert' ? 520 : 660;
-        gain.gain.value = 0.04;
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.start(); setTimeout(() => { gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.15); osc.stop(ctx.currentTime + 0.18); }, 120);
-      } catch (e) {}
-    };
-
-    const updateTime = () => {
-      const el = document.getElementById('clock');
-      if (!el) return;
-      try { el.textContent = new Date().toLocaleString('en-GB', { hour: '2-digit', minute:'2-digit', second:'2-digit', day:'2-digit', month:'short', year:'numeric', timeZoneName:'short' }); } catch (e) {}
-    };
-    const updateLastUpdated = () => {
-      const el = document.getElementById('lastUpdated');
-      if (el) el.textContent = 'just now';
-    };
-    updateTime(); setInterval(updateTime, 1000); setInterval(updateLastUpdated, 60000);
-
-    document.getElementById('refreshBtn')?.addEventListener('click', () => { window.location.reload(true); play('ok'); });
-
-    document.getElementById('purgeCacheBtn')?.addEventListener('click', async () => {
-      if ('serviceWorker' in navigator) {
-        try {
-          const reg = await navigator.serviceWorker.ready;
-          reg.active?.postMessage('purge');
-          play('alert');
-        } catch (e) { window.location.reload(true); }
-      } else {
-        window.location.reload(true);
-      }
-    });
-
-    (() => {
-      const btn = document.getElementById('installBtn');
-      if (!btn) return;
-      const hide = () => { btn.textContent = 'Install'; btn.disabled = true; };
-      let deferredPrompt = null;
-      const install = async () => {
-        if (deferredPrompt) {
-          deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          deferredPrompt = null; hide(); return;
-        }
-        btn.textContent = 'Use browser menu to install';
-        setTimeout(hide, 2500);
-      };
-      window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; btn.disabled = false; btn.textContent = 'Install app'; });
-      window.addEventListener('appinstalled', () => { deferredPrompt = null; hide(); });
-      btn.addEventListener('click', install);
-    })();
-
-    (() => {
-      const btn = document.getElementById('notifBtn');
-      if (!btn) return;
-      const update = () => {
-        if ('serviceWorker' in navigator && 'PushManager' in window) {
-          btn.textContent = '🔔';
-          btn.style.color = 'var(--accent)';
-        } else {
-          btn.textContent = '🔕';
-          btn.style.color = '#6b8299';
-          btn.disabled = true;
-          btn.title = 'Notifications unavailable in this browser';
-        }
-      };
-      btn.addEventListener('click', async () => {
-        if (!('Notification' in window)) return;
-        const perm = await Notification.requestPermission();
-        if (perm === 'granted') {
-          btn.textContent = '🔕';
-          btn.style.color = 'var(--good)';
-          btn.title = 'Notifications enabled';
-          try {
-            const reg = await navigator.serviceWorker.ready;
-            await reg.showNotification('Newtons AI Daily Brief', { body: 'You’ll now get daily brief notifications.', icon: '/icon-192.png', badge: '/icon-192.png' });
-          } catch (e) {}
-        } else {
-          btn.textContent = '🔕';
-          btn.style.color = 'var(--danger)';
-          btn.title = 'Notifications blocked';
-        }
-      });
-      update();
-    })();
-
-    const offlineToast = document.getElementById('offlineToast');
-    const showOffline = () => { offlineToast?.classList.add('show'); };
-    const hideOffline = () => { offlineToast?.classList.remove('show'); };
-    window.addEventListener('offline', () => { showOffline(); document.getElementById('statusText').textContent = 'Offline'; });
-    window.addEventListener('online', () => { hideOffline(); document.getElementById('statusText').textContent = 'Live'; });
-    if (!navigator.onLine) showOffline();
-
-    const setSkeleton = (id, show) => {
-      const el = document.getElementById(id);
-      const chartMap = { skPipeline: 'pipelineChart', skConversion: 'conversionChart', skResponse: 'responseChart', skChannel: 'channelChart' };
-      if (!el) return;
-      const chartId = chartMap[id];
-      const chartCanvas = chartId ? document.getElementById(chartId) : null;
-      el.style.display = show ? 'block' : 'none';
-      if (chartCanvas) chartCanvas.style.display = show ? 'none' : 'block';
-    };
-
-    const chartsReady = new Set(['pipelineChart','conversionChart','responseChart','channelChart']);
-    const hideChartSkeleton = (id) => {
-      const map = { pipelineChart: 'skPipeline', conversionChart: 'skConversion', responseChart: 'skResponse', channelChart: 'skChannel' };
-      setSkeleton(map[id], false);
-      chartsReady.add(id);
-    };
-
-    try {
-      if (navigator.onLine === false) throw new Error('offline');
-      const isChartJs = typeof Chart !== 'undefined';
-      if (!isChartJs) throw new Error('Chart.js missing');
-
-      const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-      const common = {
-        color: (ctx2) => {
-          const palette = ['#00d6c1','#7ee787','#ffdf6e','#60c0f8','#c084fc','#ff9a8b'];
-          return palette[ctx2.dataIndex % palette.length];
-        },
-        plugins: { legend: { labels: { color: '#8aa6bf', padding: 12, font: { size: 12 } } } },
-        scales: {
-          x: { ticks: { color: '#8aa6bf', font: { size: 11 } }, grid: { color: '#12243a' } },
-          y: { ticks: { color: '#8aa6bf', font: { size: 11 } }, grid: { color: '#12243a' } }
-        },
-        animation: { duration: 900, easing: 'easeOutQuart' }
-      };
-
-      const pipeline = new Chart(document.getElementById('pipelineChart'), {
-        type: 'line',
-        data: {
-          labels: days,
-          datasets: [
-            { label: 'Qualified', data: [12,19,15,22,18,25,20], tension: 0.35, fill: false, borderWidth: 2 },
-            { label: 'Proposal', data: [8,12,10,14,11,15,13], tension: 0.35, fill: false, borderWidth: 2 },
-            { label: 'Negotiation', data: [4,7,5,9,6,10,8], tension: 0.35, fill: false, borderWidth: 2 }
-          ]
-        },
-        options: common,
-        plugins: [{ id: 'click-legend', afterEvent(chart, args) {
-          const event = args.event;
-          if (event.type === 'click' && event.native.target.tagName === 'CANVAS') return;
-        }}]
-      });
-      pipeline.update();
-      hideChartSkeleton('pipelineChart');
-
-      const conversion = new Chart(document.getElementById('conversionChart'), {
-        type: 'bar',
-        data: {
-          labels: days,
-          datasets: [
-            { label: 'Leads', data: [120,150,110,170,140,190,160], backgroundColor: '#122a3a', borderRadius: 6 },
-            { label: 'Conversions', data: [30,45,25,60,40,70,50], backgroundColor: '#00d6c1', borderRadius: 6 }
-          ]
-        },
-        options: common
-      });
-      conversion.update();
-      hideChartSkeleton('conversionChart');
-
-      const response = new Chart(document.getElementById('responseChart'), {
-        type: 'line',
-        data: {
-          labels: days,
-          datasets: [
-            { label: 'Avg mins', data: [45,38,52,29,34,22,31], tension: 0.4, fill: false, borderWidth: 2 },
-            { label: 'Target', data: Array.from({length:7}, () => 30), borderDash: [5,5], pointRadius: 0, borderWidth: 1.5 }
-          ]
-        },
-        options: common
-      });
-      response.update();
-      hideChartSkeleton('responseChart');
-
-      const channel = new Chart(document.getElementById('channelChart'), {
-        type: 'doughnut',
-        data: {
-          labels: ['WhatsApp','Telegram','Web','Phone','Email'],
-          datasets: [{ data: [38,24,20,12,6], backgroundColor: ['#00d6c1','#7ee787','#ffdf6e','#60c0f8','#c084fc'], borderColor: '#0b1520', borderWidth: 2 }]
-        },
-        options: { cutout: '62%', plugins: { legend: { position: 'bottom', labels: { color: '#8aa6bf', padding: 10, font: { size: 11 } } } }, animation: { duration: 900 } }
-      });
-      channel.update();
-      hideChartSkeleton('channelChart');
-    } catch (e) {
-      console.warn('Chart init failed:', e);
-      ['skPipeline','skConversion','skResponse','skChannel'].forEach((id) => setSkeleton(id, false));
-    }
-
-    (function animateCounters() {
-      const map = { kpiInbox: 24, kpiDeals: 9, kpiSupport: 3, kpiResolved: 6 };
-      const kpisEl = document.getElementById('kpis');
-      if (kpisEl) kpisEl.innerHTML = '';
-      Object.entries(map).forEach(([id, target]) => {
-        const card = document.createElement('div');
-        card.className = 'kpi';
-        card.innerHTML = `<div class="value" id="${id}">0</div><div class="label">${id.replace('kpi','').replace('Deals','Open deals').replace('Support','Open tickets').replace('Resolved','Resolved today').replace('Inbox','Inbox (24h)')}</div><div class="delta up">+${Math.floor(target/4)}</div>`;
-        kpisEl?.appendChild(card);
-        const el = document.getElementById(id);
-        if (!el) return;
-        let n = 0;
-        const step = Math.max(1, Math.floor(target / 24));
-        const tick = () => {
-          n = Math.min(target, n + (target - n >= 10 ? step : 1));
-          el.textContent = n;
-          if (n < target) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      });
-      const sk = document.getElementById('kpis');
-      if (sk) {
-        Array.from(sk.querySelectorAll('.skeleton')).forEach((s) => s.remove());
-      }
-    })();
-
-    (() => {
-      const copyBtn = document.getElementById('copySnippetBtn');
-      const ta = document.getElementById('normalizedSnippet');
-      const status = document.getElementById('copyStatus');
-      if (!copyBtn || !ta) return;
-      const copy = async () => {
-        try {
-          await navigator.clipboard.writeText(ta.value);
-          if (status) status.textContent = 'Copied to clipboard';
-          setTimeout(() => { if (status) status.textContent = ''; }, 1800);
-        } catch (e) {
-          if (status) status.textContent = 'Copy failed';
-          ta.select();
-        }
-      };
-      copyBtn.addEventListener('click', copy);
-    })();
-  </script>
+  <div class="callout">
+    <h2>Action Callout</h2>
+    <ul>
+        <li>Follow up with <strong>Beta</strong> by EOD to unlock Q3 close</li>
+<li>Send updated proposal to <strong>Gamma</strong> and book technical review</li>
+    </ul>
+  </div>
+</main>
+<footer>
+  © 2026 Newton's AI · Generated for Newtons AI (shiva452648)
+</footer>
 </body>
 </html>
